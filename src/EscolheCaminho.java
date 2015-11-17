@@ -25,7 +25,7 @@ public class EscolheCaminho {
 	//Singleton
 	//Escolhe Novo Caminho
 	public int EscolheNovoCaminho(char tipo, int PO, int PF){
-		if(tipo=='t'){
+		if(tipo=='t'){//Testa todos os caminhos possiveis para transformação
 			if(PO==1 && PF==5){//Pode ser transformada em qualquer célula de transformação
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
 					return 1;
