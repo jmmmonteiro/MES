@@ -91,7 +91,7 @@ public class GestordePedidos {
 		
 		vetorPedidosAcabados[i]=vetorPedidosPendentes[posicao]; //copia para a primeira posição livre 
 		shiftEsquerdaVetor(posicao);// retirar do vetor com os pedidos pendentes, o pedido acabado
-			// inserir no vetor que terá historico de todos pedidos executados		
+				
 	}
 	
 	public int procuraPosicao(int NO){
