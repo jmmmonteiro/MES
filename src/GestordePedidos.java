@@ -49,7 +49,7 @@ public class GestordePedidos {
 			
 			
 			
-			/*
+			/* fazer para s utrs tips pedids
 			if(aux[1]=='M'){  // Trata-se de uma Montagem
 				Montagem nomeMontagem=new Montagem(aux[1],aux[2],aux[3]); // criar objecto tipo monta
 				System.out.println("Pedido adicionado");
@@ -80,9 +80,14 @@ public class GestordePedidos {
 	
 			// retirar do vetor com os pedidos pendentes este 
 			return true // se realizado com sucesso 
-			// inserir no vetor que terá historico de todos pedidos executados		
+			// inserir no vetor que terá historico de todos pedidos executados
+			numPedido--;
 	}
 }
 	
-	
+/*tem ainda de ter cic para tentar cntinuadamente intrduzir nvs pedids 
+ * tarnsfrma tem de retrnar ag para saber se nã cnsegui criar para passar este pedid para fim da fia
+ * e shiftar tds s utrs um pedid para a frente 
+ * quand remve tende de puxar tds  s utrs pedids para a frente, para inserir sempre n fim
+ */	
 	
