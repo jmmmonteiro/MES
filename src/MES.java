@@ -1,3 +1,4 @@
+import java.net.UnknownHostException;
 
 public class MES {
 	private static MES instance;
@@ -17,10 +18,14 @@ public class MES {
 	}
 	
 	//main
-	public static void main(String args[]){
+	public static void main(String args[])throws UnknownHostException, Exception{
 		System.out.println("MES criado");
-		MES.init();//inicializa MES
+		//GestordePedidos Pedido=GestordePedidos.getInstance();
+		//Pedido.novoPedido(":T001151");
+		Transforma T1=new Transforma(1,1,5);//Pedido pré-definido VERSÂO DE TESTE
+		if(T1.caminho()!=0){//se já tem caminho começa VERSÂO DE TESTE
+			T1.start();//VERSÂO DE TESTE
+		}
 		
-			
 	}
 }

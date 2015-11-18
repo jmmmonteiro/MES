@@ -25,15 +25,19 @@ public class EscolheCaminho {
 		if(tipo=='T'){//Testa todos os caminhos possiveis para transformação
 			if(PO==1 && PF==5){//Pode ser transformada em qualquer célula de transformação
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
-					return 1;
+					Celula1.AlteraDisponibilidade();
+					return 1;//pode mudar para outro numero
 				}
 				else if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula2.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
+					Celula3.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
+					Celula4.AlteraDisponibilidade();
 					return 1;
 				}
 				else{

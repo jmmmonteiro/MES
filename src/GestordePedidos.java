@@ -46,7 +46,7 @@ public class GestordePedidos {
 					int auxiliar = Integer.parseInt(str.toString()); // coverter para inteiro, pois o que recebe transforma
 					int auxiliar2 = Character.getNumericValue(aux[4]); //converter char para inteiro
 					int auxiliar3 = Character.getNumericValue(aux[5]);
-					Transforma novoTransforma=new Transforma(auxiliar, auxiliar2 , auxiliar3, 't'); // criar objecto tipo transforma
+					Transforma novoTransforma=new Transforma(auxiliar, auxiliar2 , auxiliar3); // criar objecto tipo transforma
 					i++;//para criar tantos pedidos transforma deste tipo quantos indicados
 				}
 				System.out.println("Pedido adicionado");
