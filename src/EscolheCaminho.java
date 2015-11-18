@@ -1,8 +1,5 @@
 //Classe Singleton - só existe um objecto 
 public class EscolheCaminho {
-	public int[] VetorTapetes=new int[5];//Vetor dos tapetes a usar
-	public int[] VetorMaquina=new int[2];//Vetor das maquinas a usar
-	public int[] VetorTMaquina=new int[2];//Tempo das maquinas
 	//criar Células
 	Celula Celula1=new Celula();
 	Celula Celula2=new Celula();
@@ -25,7 +22,7 @@ public class EscolheCaminho {
 	//Singleton
 	//Escolhe Novo Caminho
 	public int EscolheNovoCaminho(char tipo, int PO, int PF){
-		if(tipo=='t'){//Testa todos os caminhos possiveis para transformação
+		if(tipo=='T'){//Testa todos os caminhos possiveis para transformação
 			if(PO==1 && PF==5){//Pode ser transformada em qualquer célula de transformação
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
 					return 1;
