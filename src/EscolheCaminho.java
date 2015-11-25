@@ -46,6 +46,7 @@ public class EscolheCaminho {
 			}	
 			else if(PO==1 && PF==2){//Só pode ser transformada na Célula 1
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
+					Celula1.AlteraDisponibilidade();
 					return 1;
 				}
 				else{//Não há células disponiveis para este pedido
@@ -53,7 +54,8 @@ public class EscolheCaminho {
 				}
 			}
 			else if(PO==1 && PF==3){//Só pode ser transformada na Célula 1
-				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
+				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1
+					Celula1.AlteraDisponibilidade();
 					return 1;
 				}
 				else{//Não há células disponiveis para este pedido
@@ -62,6 +64,7 @@ public class EscolheCaminho {
 			}
 			else if(PO==1 && PF==4){//Só pode ser transformada na Célula 1
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
+					Celula1.AlteraDisponibilidade();
 					return 1;
 				}
 				else{//Não há células disponiveis para este pedido
@@ -70,12 +73,15 @@ public class EscolheCaminho {
 			}
 			else if(PO==1 && PF==8){//Só pode ser transformada por C2,C3,C4
 				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula2.AlteraDisponibilidade();
 					return 1;
 				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3
+					Celula3.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
+					Celula4.AlteraDisponibilidade();
 					return 1;
 				}
 				else{
@@ -84,12 +90,15 @@ public class EscolheCaminho {
 			}
 			else if(PO==1 && PF==9){//Só pode ser transformada por C2,C3,C4
 				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula2.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
+					Celula3.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
+					Celula4.AlteraDisponibilidade();
 					return 1;
 				}
 				else{
@@ -98,6 +107,7 @@ public class EscolheCaminho {
 			}
 			else if(PO==2 && PF==4){//Só pode ser transformada na Célula 1
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
+					Celula1.AlteraDisponibilidade();
 					return 1;
 				}
 				else{//Não há células disponiveis para este pedido
@@ -106,15 +116,19 @@ public class EscolheCaminho {
 			}
 			else if(PO==2 && PF==3){//Pode ser transformada em qualquer célula de transformação
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
+					Celula1.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula2.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
+					Celula3.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
+					Celula4.AlteraDisponibilidade();
 					return 1;
 				}
 				else{
@@ -123,6 +137,7 @@ public class EscolheCaminho {
 			}
 			else if(PO==3 && PF==4){//Só pode ser transformada na Célula 1
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
+					Celula1.AlteraDisponibilidade();
 					return 1;
 				}
 				else{//Não há células disponiveis para este pedido
@@ -131,12 +146,15 @@ public class EscolheCaminho {
 			}
 			else if(PO==5 && PF==6){//Só pode ser transformada em C2,C3,C4
 				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula2.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
+					Celula3.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
+					Celula4.AlteraDisponibilidade();
 					return 1;
 				}
 				else{
@@ -145,12 +163,15 @@ public class EscolheCaminho {
 			}
 			else if(PO==5 && PF==8){//Só pode ser transformada em C2,C3,C4
 				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula2.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
+					Celula3.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
+					Celula4.AlteraDisponibilidade();
 					return 1;
 				}
 				else{
@@ -159,12 +180,15 @@ public class EscolheCaminho {
 			}
 			else if(PO==5 && PF==7){//Só pode ser transformada em C2,C3,C4
 				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula2.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
+					Celula3.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
+					Celula4.AlteraDisponibilidade();
 					return 1;
 				}
 				else{
@@ -173,12 +197,15 @@ public class EscolheCaminho {
 			}
 			else if(PO==5 && PF==9){//Só pode ser transformada em C2,C3,C4
 				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula2.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
+					Celula3.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
+					Celula4.AlteraDisponibilidade();
 					return 1;
 				}
 				else{
@@ -187,15 +214,19 @@ public class EscolheCaminho {
 			}
 			else if(PO==6 && PF==7){//pode ser transformada em C1,C2,C3,C4
 				if(Celula1.Disponibilidade()==true){//verifica disponibilidade célula 1
+					Celula1.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula2.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
+					Celula3.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
+					Celula4.AlteraDisponibilidade();
 					return 1;
 				}
 				else{
@@ -204,6 +235,7 @@ public class EscolheCaminho {
 			}
 			else if(PO==8 && PF==7){
 				if(Celula1.Disponibilidade()==true){//verifica disponibilidade célula 1
+					Celula1.AlteraDisponibilidade();
 					return 1;
 				}
 				else{
@@ -212,12 +244,15 @@ public class EscolheCaminho {
 			}
 			else{
 				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula2.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
+					Celula3.AlteraDisponibilidade();
 					return 1;
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
+					Celula4.AlteraDisponibilidade();
 					return 1;
 				}
 				else{
