@@ -30,7 +30,18 @@ public class Transforma {
 	}
 	
 	public void start() throws UnknownHostException, Exception{
+		
 		ModBus.writePLC(0, caminho);//VERSÂO DE TESTE
+		int a=ModBus.readPLC(0, 1);
+		//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
+		while(a==0){
+			a=ModBus.readPLC(0, 1);//Enquanto a é 0 leio registo
+		}
+		if(a==1)//Se a passa a 1 significa que já arrancou 
+		{
+			ModBus.writePLC(0, 0);//escreve 0 para impedir que arranque caso haja nova peça
+		}
+		//System.out.println(a);
 	}
 	
 }
