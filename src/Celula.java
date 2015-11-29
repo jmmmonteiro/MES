@@ -12,6 +12,7 @@ public class Celula {
 	//Altera Disponibilidade da Célula
 	public boolean AlteraDisponibilidade(){
 		livre=!livre;
+		System.out.println(livre);
 		return livre;
 	}
 }

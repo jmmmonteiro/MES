@@ -20,6 +20,31 @@ public class EscolheCaminho {
 		return instance;
 	}
 	//Singleton
+	//Altera Disponibilidade de uma Célula
+	public void Disp(int celula){
+		if(celula==1)
+		{
+			Celula1.AlteraDisponibilidade();
+		}
+		else if(celula==2)
+		{
+			Celula2.AlteraDisponibilidade();
+		}
+		else if(celula==3)
+		{
+			Celula3.AlteraDisponibilidade();
+		}
+		else if(celula==4)
+		{
+			Celula4.AlteraDisponibilidade();
+		}
+		else
+		{
+			return;
+		}
+		return;
+	}
+	
 	//Escolhe Novo Caminho
 	public int EscolheNovoCaminho(char tipo, int PO, int PF){
 		if(tipo=='T'){//Testa todos os caminhos possiveis para transformação
