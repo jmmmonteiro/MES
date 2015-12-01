@@ -1,4 +1,4 @@
-import java.net.UnknownHostException;
+//import java.net.UnknownHostException;
 
 public class MES {
 	private static MES instance;
@@ -22,12 +22,21 @@ public class MES {
 		System.out.println("MES criado");
 		//GestordePedidos Pedido=GestordePedidos.getInstance();
 		//Pedido.novoPedido(":T001151");
-		Transforma T1=new Transforma(1,1,5);//Pedido pré-definido VERSÂO DE TESTE
-		if(T1.caminho()!=0){//se já tem caminho começa VERSÂO DE TESTE
+		
+		//Thread T1=new Thread (new Transforma(1,1,5,));//Pedido pré-definido VERSÂO DE TESTE
+		
+		EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
+		int caminho=Caminho.EscolheNovoCaminho('T', 1, 5);
+		if(caminho!=0){//se já tem caminho começa VERSÂO DE TESTE
 			try{
+			Thread T1=new Thread (new Transforma(1,1,5,caminho));//Pedido pré-definido VERSÂO DE TESTE	
+			Thread T2=new Thread (new Transforma(1,1,5,caminho));//Pedido pré-definido VERSÂO DE TESTE	
 			T1.start();//VERSÂO DE TESTE
+			T2.start();
 			}
-			catch(Exception e){}
+			catch(Exception e){
+				System.out.println("Erro");
+			}
 		}
 		
 	}

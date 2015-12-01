@@ -1,6 +1,6 @@
-import java.net.UnknownHostException;
+//import java.net.UnknownHostException;
 
-public class Transforma {
+public class Transforma implements Runnable{
 	public int NO;
 	public int PO;
 	public int PF;
@@ -8,12 +8,13 @@ public class Transforma {
 	public boolean fim;
 	private int caminho;
 	//Construtor Transforma cria novo transforma com as variaveis necessárias
-	public Transforma(int NumO, int PecaO, int PecaF){
+	public Transforma(int NumO, int PecaO, int PecaF,int cnovo){
 		NO=NumO;//define numero de ordem
 		PO=PecaO;//define peça original
 		PF=PecaF;//define peça final
 		Tipo='T';	//define tipo
 		fim=false;			
+		caminho=cnovo;
 	}
 	
 	public int caminho(){//Vê se existe caminho livre
@@ -29,21 +30,27 @@ public class Transforma {
 		
 	}
 	
-	public void start() throws UnknownHostException, Exception{
-		
-		ModBus.writePLC(0, caminho);//VERSÂO DE TESTE
-		int a;
-		do{
-			a=ModBus.readPLC(0, 1);
+	public void run(){
+		try{
+			ModBus.writePLC(0, caminho);//VERSÂO DE TESTE
+			int a;
+			System.out.println("Thread a correr");
+			do{
+				a=ModBus.readPLC(0, 1);
+			}
+			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
+			while(a==0);
+			if(a==1)//Se a passa a 1 significa que já arrancou 
+			{
+				ModBus.writePLC(0, 0);//escreve 0 para impedir que arranque caso haja nova peça
+			}
+			//System.out.println(a);
+			Thread.sleep(10000);//sleep 10 segundos
+			
 		}
-		//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
-		while(a==0);
-		if(a==1)//Se a passa a 1 significa que já arrancou 
-		{
-			ModBus.writePLC(0, 0);//escreve 0 para impedir que arranque caso haja nova peça
+		catch(Exception e){
+			System.out.println("Erro");
 		}
-		//System.out.println(a);
-	
 	}
 	
 }

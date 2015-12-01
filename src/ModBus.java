@@ -1,5 +1,5 @@
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+//import java.net.UnknownHostException;
 
 import net.wimpi.modbus.io.ModbusTCPTransaction;
 import net.wimpi.modbus.msg.ReadInputRegistersRequest;
