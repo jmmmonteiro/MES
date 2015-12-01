@@ -25,7 +25,8 @@ public class ModBus {
 	//função para Ler PLC. 
 	//ref-numero do primeiro registo a ler
 	//count-numero de registos a ler
-	public static int readPLC(int ref,int count) throws UnknownHostException, Exception {
+	public static int readPLC(int ref,int count) {
+		try{
 		TCPMasterConnection con = null; //the connection
 		ModbusTCPTransaction trans = null; //the transaction
 		ReadInputRegistersRequest req = null; //the request
@@ -55,12 +56,19 @@ public class ModBus {
 		a = res.getRegisterValue(ref);
 		System.out.println("Digital Inputs Status=" +Integer.toBinaryString((a & 0xFF) + 0x100).substring(1));
 		return a;//retorna inteiro
+		}
+		catch(Exception e) {
+			System.out.println("Erro de comunicação");
+			return 0;
+		}
+		
 	}
 	
 	//função para Escrever no PLC. 
 	//ref-numero do primeiro registo a ler
 	//w-Word a escrever no PLC
-	public static void writePLC(int ref,int w) throws UnknownHostException,Exception {
+	public static void writePLC(int ref,int w){
+		try{
 		TCPMasterConnection con = null; //the connection
 			
 		/* Variables for storing the parameters */
@@ -80,5 +88,9 @@ public class ModBus {
 		int c=res2.getRegisterValue();
 		int d=res2.getReference();
 		System.out.println("escrito no registo" +d +c);
+		}
+		catch(Exception e) {
+			System.out.println("Erro de comunicação");
+		}
 	}
 }
