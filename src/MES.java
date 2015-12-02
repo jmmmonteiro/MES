@@ -30,9 +30,7 @@ public class MES {
 		if(caminho!=0){//se já tem caminho começa VERSÂO DE TESTE
 			try{
 			Thread T1=new Thread (new Transforma(1,1,5,caminho));//Pedido pré-definido VERSÂO DE TESTE	
-			Thread T2=new Thread (new Transforma(1,1,5,caminho));//Pedido pré-definido VERSÂO DE TESTE	
 			T1.start();//VERSÂO DE TESTE
-			T2.start();
 			}
 			catch(Exception e){
 				System.out.println("Erro");
