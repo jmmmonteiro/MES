@@ -25,7 +25,7 @@ public class ModBus {
 	//função para Ler PLC. 
 	//ref-numero do primeiro registo a ler
 	//count-numero de registos a ler
-	public static int readPLC(int ref,int count) {
+	public synchronized static int readPLC(int ref,int count) {
 		try{
 		TCPMasterConnection con = null; //the connection
 		ModbusTCPTransaction trans = null; //the transaction
@@ -67,7 +67,7 @@ public class ModBus {
 	//função para Escrever no PLC. 
 	//ref-numero do primeiro registo a ler
 	//w-Word a escrever no PLC
-	public static void writePLC(int ref,int w){
+	public synchronized static void writePLC(int ref,int w){
 		try{
 		TCPMasterConnection con = null; //the connection
 			
