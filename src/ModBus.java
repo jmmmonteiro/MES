@@ -54,7 +54,7 @@ public class ModBus {
 		trans.execute();
 		res = (ReadInputRegistersResponse) trans.getResponse();
 		a = res.getRegisterValue(ref);
-		System.out.println("Digital Inputs Status=" +Integer.toBinaryString((a & 0xFF) + 0x100).substring(1));
+		//System.out.println("Digital Inputs Status=" +Integer.toBinaryString((a & 0xFF) + 0x100).substring(1));
 		return a;//retorna inteiro
 		}
 		catch(Exception e) {
@@ -87,7 +87,7 @@ public class ModBus {
 		WriteSingleRegisterResponse res2=(WriteSingleRegisterResponse) trans2.getResponse();//obtem resposta
 		int c=res2.getRegisterValue();
 		int d=res2.getReference();
-		System.out.println("escrito no registo" +d +c);
+		//System.out.println("escrito no registo" +d +c);
 		}
 		catch(Exception e) {
 			System.out.println("Erro de comunicação");

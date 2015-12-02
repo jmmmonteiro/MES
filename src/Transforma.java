@@ -33,19 +33,37 @@ public class Transforma implements Runnable{
 	public void run(){
 		try{
 			ModBus.writePLC(0, caminho);//VERSÂO DE TESTE
-			int a;
+			int a,b;
 			System.out.println("Thread a correr");
+			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
 			do{
 				a=ModBus.readPLC(0, 1);
 			}
-			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
 			while(a==0);
 			if(a==1)//Se a passa a 1 significa que já arrancou 
 			{
 				ModBus.writePLC(0, 0);//escreve 0 para impedir que arranque caso haja nova peça
 			}
 			//System.out.println(a);
-			Thread.sleep(10000);//sleep 10 segundos
+			Thread.sleep(25000);//sleep 25 segundos
+			
+			do{
+				b=ModBus.readPLC(0, 1);
+				if(b==2 || b==3)
+				{
+					System.out.println("altera disponibilidade da célula");
+					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
+					if(caminho==1)
+					{
+						Caminho.Celula1.AlteraDisponibilidade();	
+					}
+					break;
+					//ALTERA DISP DA Célula
+				}
+				Thread.sleep(5000);//sleep 2 segundos				
+			}
+			while(b!=2 || b!=3);
+			//fim=true;
 			
 		}
 		catch(Exception e){
