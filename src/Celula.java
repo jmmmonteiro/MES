@@ -6,11 +6,11 @@ public class Celula {
 		livre=true;
 	}
 	//Verifica Disponibilidade da Célula
-	public  boolean Disponibilidade(){
+	public  synchronized boolean Disponibilidade(){
 		return livre;
 	}
 	//Altera Disponibilidade da Célula
-	public boolean AlteraDisponibilidade(){
+	public synchronized boolean AlteraDisponibilidade(){
 		livre=!livre;
 		System.out.println(livre);
 		return livre;

@@ -13,7 +13,7 @@ public class EscolheCaminho {
 	private static EscolheCaminho instance;
 	private EscolheCaminho(){}
 	
-	public static EscolheCaminho getInstance(){
+	public synchronized static EscolheCaminho getInstance(){
 		if(instance==null){
 			instance=new EscolheCaminho();	
 		}
