@@ -42,10 +42,10 @@ public class GestordePedidos {
 				//boolean fim = false; //era para ficar a true quando pedido fica-se terminado
 				
 				while(i<n){
-					String str = new StringBuilder().append(aux[1]).append(aux[2]).append(aux[3]).toString(); // junta o nº ordem numa string
-					int auxiliar = Integer.parseInt(str.toString()); // coverter para inteiro, pois o que recebe transforma
-					int auxiliar2 = Character.getNumericValue(aux[4]); //converter char para inteiro
-					int auxiliar3 = Character.getNumericValue(aux[5]);
+					//String str = new StringBuilder().append(aux[1]).append(aux[2]).append(aux[3]).toString(); // junta o nº ordem numa string
+					//int auxiliar = Integer.parseInt(str.toString()); // coverter para inteiro, pois o que recebe transforma
+					//int auxiliar2 = Character.getNumericValue(aux[4]); //converter char para inteiro
+					//int auxiliar3 = Character.getNumericValue(aux[5]);
 					//Transforma novoTransforma=new Transforma(auxiliar, auxiliar2 , auxiliar3); // criar objecto tipo transforma
 					i++;//para criar tantos pedidos transforma deste tipo quantos indicados
 				}

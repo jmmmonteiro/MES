@@ -1,20 +1,19 @@
-//import java.net.UnknownHostException;
 
-public class Transforma implements Runnable{
+public class Montagem implements Runnable{
 	public int NO;
-	public int PO;
-	public int PF;
+	public int Pb;
+	public int Pc;
 	public char Tipo;
 	public boolean fim;
-	private int caminho;
-	//Construtor Transforma cria novo transforma com as variaveis necessárias
-	public Transforma(int NumO, int PecaO, int PecaF,int cnovo){
+	//private int caminho;
+	//Construtor Montagem cria nova montagem com as variaveis necessárias
+	public Montagem(int NumO, int Pbaixo, int Pcima){
 		NO=NumO;//define numero de ordem
-		PO=PecaO;//define peça original
-		PF=PecaF;//define peça final
-		Tipo='T';	//define tipo
+		Pb=Pbaixo;//define peça original
+		Pc=Pcima;//define peça final
+		Tipo='M';	//define tipo
 		fim=false;			
-		caminho=cnovo;
+		//caminho=cnovo;
 	}
 	
 	/*public int caminho(){//Vê se existe caminho livre
@@ -32,7 +31,8 @@ public class Transforma implements Runnable{
 	
 	public void run(){
 		try{
-			ModBus.writePLC(0, caminho);//VERSÂO DE TESTE
+			int ref=100;//escreve no registo 100 (TESTE)
+			ModBus.writePLC(ref,1);//escreve 1 no resgito ref
 			int a,b;
 			System.out.println("Thread a correr");
 			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
@@ -42,10 +42,10 @@ public class Transforma implements Runnable{
 			while(a==0);
 			if(a==1)//Se a passa a 1 significa que já arrancou 
 			{
-				ModBus.writePLC(0, 0);//escreve 0 para impedir que arranque caso haja nova peça
+				ModBus.writePLC(ref, 0);//escreve 0 para impedir que arranque caso haja nova peça
 			}
 			//System.out.println(a);
-			Thread.sleep(25000);//sleep 25 segundos
+			Thread.sleep(40000);//sleep 40 segundos
 			
 			do{
 				b=ModBus.readPLC(0, 1);
@@ -53,14 +53,11 @@ public class Transforma implements Runnable{
 				{
 					System.out.println("altera disponibilidade da célula");
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-					if(caminho==1)
-					{
-						Caminho.Celula1.AlteraDisponibilidade();	
-					}
+					Caminho.Celula5.AlteraDisponibilidade();	
 					break;
 					//ALTERA DISP DA Célula
 				}
-				Thread.sleep(5000);//sleep 2 segundos				
+				Thread.sleep(5000);//sleep 5 segundos				
 			}
 			while(b!=2 || b!=3);
 			//fim=true;
@@ -72,3 +69,4 @@ public class Transforma implements Runnable{
 	}
 	
 }
+

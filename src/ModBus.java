@@ -5,7 +5,7 @@ import net.wimpi.modbus.io.ModbusTCPTransaction;
 import net.wimpi.modbus.msg.ReadInputRegistersRequest;
 import net.wimpi.modbus.msg.ReadInputRegistersResponse;
 import net.wimpi.modbus.msg.WriteSingleRegisterRequest;
-import net.wimpi.modbus.msg.WriteSingleRegisterResponse;
+//import net.wimpi.modbus.msg.WriteSingleRegisterResponse;
 import net.wimpi.modbus.net.TCPMasterConnection;
 import net.wimpi.modbus.procimg.SimpleRegister;
 
@@ -65,7 +65,7 @@ public class ModBus {
 	}
 	
 	//função para Escrever no PLC. 
-	//ref-numero do primeiro registo a ler
+	//ref-numero do registo a escrever
 	//w-Word a escrever no PLC
 	public synchronized static void writePLC(int ref,int w){
 		try{
@@ -84,9 +84,9 @@ public class ModBus {
 		ModbusTCPTransaction trans2 = new ModbusTCPTransaction(con);//cria transação
 		trans2.setRequest(req2);//faz pedido
 		trans2.execute();//executa transação
-		WriteSingleRegisterResponse res2=(WriteSingleRegisterResponse) trans2.getResponse();//obtem resposta
-		int c=res2.getRegisterValue();
-		int d=res2.getReference();
+		//WriteSingleRegisterResponse res2=(WriteSingleRegisterResponse) trans2.getResponse();//obtem resposta
+		//int c=res2.getRegisterValue();
+		//int d=res2.getReference();
 		//System.out.println("escrito no registo" +d +c);
 		}
 		catch(Exception e) {
