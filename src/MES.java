@@ -20,6 +20,7 @@ public class MES {
 	//main
 	public static void main(String args[]){
 		System.out.println("MES criado");
+		
 		//GestordePedidos Pedido=GestordePedidos.getInstance();
 		//Pedido.novoPedido(":T001151");
 		

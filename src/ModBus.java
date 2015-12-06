@@ -25,6 +25,8 @@ public class ModBus {
 	//função para Ler PLC. 
 	//ref-numero do primeiro registo a ler
 	//count-numero de registos a ler
+	
+	
 	public synchronized static int readPLC(int ref,int count) {
 		try{
 		TCPMasterConnection con = null; //the connection
@@ -39,6 +41,7 @@ public class ModBus {
 		//int repeat = 1; //a loop for repeating the transaction
 		
 		con = new TCPMasterConnection(addr);
+		//con.setTimeout(10000);//set Timeout de 10 segundos
 		con.setPort(port);
 		con.connect();
 		
@@ -75,6 +78,7 @@ public class ModBus {
 		InetAddress addr = InetAddress.getByName("127.0.0.1");
 		int port = 505;
 		con = new TCPMasterConnection(addr);
+		//con.setTimeout(10000);//set Timeout de 10 segundos
 		con.setPort(port);
 		con.connect();
 		

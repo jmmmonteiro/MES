@@ -49,6 +49,7 @@ public class Transforma implements Runnable{
 			
 			do{
 				b=ModBus.readPLC(0, 1);
+				//System.out.println("ciclo");
 				if(b==2 || b==3)
 				{
 					System.out.println("altera disponibilidade da célula");
@@ -60,7 +61,7 @@ public class Transforma implements Runnable{
 					break;
 					//ALTERA DISP DA Célula
 				}
-				Thread.sleep(5000);//sleep 2 segundos				
+				Thread.sleep(5000);//sleep 5 segundos				
 			}
 			while(b!=2 || b!=3);
 			//fim=true;
