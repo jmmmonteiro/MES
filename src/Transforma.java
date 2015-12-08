@@ -45,8 +45,8 @@ public class Transforma implements Runnable{
 				ModBus.writePLC(0, 0);//escreve 0 para impedir que arranque caso haja nova peça
 			}
 			//System.out.println(a);
-			Thread.sleep(25000);//sleep 25 segundos
-			
+			//Thread.sleep(25000);//sleep 25 segundos
+			Thread.sleep(10000);//sleep 10 segundos	
 			do{
 				b=ModBus.readPLC(0, 1);
 				//System.out.println("ciclo");
@@ -61,7 +61,7 @@ public class Transforma implements Runnable{
 					break;
 					//ALTERA DISP DA Célula
 				}
-				Thread.sleep(5000);//sleep 5 segundos				
+							
 			}
 			while(b!=2 || b!=3);
 			//fim=true;

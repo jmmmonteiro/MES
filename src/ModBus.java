@@ -58,6 +58,7 @@ public class ModBus {
 		res = (ReadInputRegistersResponse) trans.getResponse();
 		a = res.getRegisterValue(ref);
 		//System.out.println("Digital Inputs Status=" +Integer.toBinaryString((a & 0xFF) + 0x100).substring(1));
+		con.close();
 		return a;//retorna inteiro
 		}
 		catch(Exception e) {
@@ -88,6 +89,7 @@ public class ModBus {
 		ModbusTCPTransaction trans2 = new ModbusTCPTransaction(con);//cria transação
 		trans2.setRequest(req2);//faz pedido
 		trans2.execute();//executa transação
+		con.close();
 		//WriteSingleRegisterResponse res2=(WriteSingleRegisterResponse) trans2.getResponse();//obtem resposta
 		//int c=res2.getRegisterValue();
 		//int d=res2.getReference();
