@@ -7,50 +7,59 @@ public class Transforma implements Runnable{
 	public char Tipo;
 	public boolean fim;
 	private int caminho;
-	//Construtor Transforma cria novo transforma com as variaveis necessárias
+	//Construtor Transforma cria novo transforma com as variaveis necessÃ¡rias
 	public Transforma(int NumO, int PecaO, int PecaF,int cnovo){
 		NO=NumO;//define numero de ordem
-		PO=PecaO;//define peça original
-		PF=PecaF;//define peça final
+		PO=PecaO;//define peÃ§a original
+		PF=PecaF;//define peÃ§a final
 		Tipo='T';	//define tipo
 		fim=false;			
 		caminho=cnovo;
 	}
 	
+	
 	public void run(){
 		try{
-			ModBus.writePLC(0, caminho);//VERSÂO DE TESTE
+			ModBus.writePLC(caminho, 1);//VERSÃ‚O DE TESTE
 			int a,b;
+			boolean run=true;
 			System.out.println("Thread a correr");
-			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
+			//IMPEDE QUE ARRANQUE COM OUTRA PEÃ‡A
 			do{
-				a=ModBus.readPLC(0, 1);
+				a=ModBus.readPLC(caminho, 1);
+				if(a==1)//Se a passa a 1 significa que jÃ¡ arrancou 
+				{
+					ModBus.writePLC(caminho, 0);//escreve 0 para impedir que arranque caso haja nova peÃ§a
+					System.out.println("ESCREVE 0 NO PLC AAAAAAAAAAAA");
+					break;
+				}
 			}
-			while(a==0);
-			if(a==1)//Se a passa a 1 significa que já arrancou 
-			{
-				ModBus.writePLC(0, 0);//escreve 0 para impedir que arranque caso haja nova peça
-			}
+			while(run);
+		
 			//System.out.println(a);
 			//Thread.sleep(25000);//sleep 25 segundos
 			Thread.sleep(10000);//sleep 10 segundos	
 			do{
-				b=ModBus.readPLC(0, 1);
+				b=ModBus.readPLC(caminho, 1);
 				//System.out.println("ciclo");
 				if(b==2 || b==3)
 				{
-					System.out.println("altera disponibilidade da célula");
+					System.out.println("\naltera disponibilidade da cÃ©lula");
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-					if(caminho==1)
+					if(caminho==0)
 					{
-						Caminho.Celula1.AlteraDisponibilidade();	
+						Caminho.Celula1.AlteraDisponibilidade();
+						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+						Gestor.SinalPedidoAcabado(NO);
+						
 					}
 					break;
-					//ALTERA DISP DA Célula
+					//ALTERA DISP DA CÃ©lula
+					
 				}
 							
 			}
-			while(b!=2 || b!=3);
+			while(run);
 			//fim=true;
 			
 		}
