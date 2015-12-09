@@ -17,19 +17,6 @@ public class Transforma implements Runnable{
 		caminho=cnovo;
 	}
 	
-	/*public int caminho(){//Vê se existe caminho livre
-		
-		EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-		caminho=Caminho.EscolheNovoCaminho(Tipo, PO, PF);
-		if(caminho!=0){//se existe célula livre
-			return 1;
-		}
-		else{//se não tiver célula disponivel
-			return 0;
-		}
-		
-	}*/
-	
 	public void run(){
 		try{
 			ModBus.writePLC(0, caminho);//VERSÂO DE TESTE
