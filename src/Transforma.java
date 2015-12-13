@@ -26,7 +26,7 @@ public class Transforma implements Runnable{
 			System.out.println("Thread a correr");
 			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
 			do{
-				a=ModBus.readPLC(caminho, 1);
+				a=ModBus.readPLC(0, caminho);
 				if(a==1)//Se a passa a 1 significa que já arrancou 
 				{
 					ModBus.writePLC(caminho, 0);//escreve 0 para impedir que arranque caso haja nova peça
@@ -40,15 +40,15 @@ public class Transforma implements Runnable{
 			//Thread.sleep(25000);//sleep 25 segundos
 			Thread.sleep(10000);//sleep 10 segundos	
 			do{
-				b=ModBus.readPLC(caminho, 1);
+				b=ModBus.readPLC(0, caminho);
 				//System.out.println("ciclo");
 				if(b==2 || b==3)
 				{
-					System.out.println("\naltera disponibilidade da célula");
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-					if(caminho==0)
+					if(caminho>=0 && caminho<=6)
 					{
 						Caminho.Celula1.AlteraDisponibilidade();
+						System.out.println("Disponibilidade"+Caminho.Celula1.Disponibilidade());
 						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
 						Gestor.SinalPedidoAcabado(NO);
 						

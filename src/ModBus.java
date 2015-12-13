@@ -47,7 +47,7 @@ public class ModBus {
 		
 		//LER DO PLC
 		//3. Prepare the request
-		req = new ReadInputRegistersRequest(ref,count);
+		req = new ReadInputRegistersRequest(ref,count+1);
 
 		//4. Prepare the transaction
 		trans = new ModbusTCPTransaction(con);
@@ -56,7 +56,7 @@ public class ModBus {
 		int a=0;
 		trans.execute();
 		res = (ReadInputRegistersResponse) trans.getResponse();
-		a = res.getRegisterValue(ref);
+		a = res.getRegisterValue(count);
 		//System.out.println("Digital Inputs Status=" +Integer.toBinaryString((a & 0xFF) + 0x100).substring(1));
 		con.close();
 		return a;//retorna inteiro

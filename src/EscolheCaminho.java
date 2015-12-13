@@ -48,7 +48,7 @@ public class EscolheCaminho {
 			else if(PO==1 && PF==2){//Só pode ser transformada na Célula 1
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
 					Celula1.AlteraDisponibilidade();
-					return 0;
+					return 1;
 				}
 				else{//Não há células disponiveis para este pedido
 					return -1;
@@ -57,7 +57,7 @@ public class EscolheCaminho {
 			else if(PO==1 && PF==3){//Só pode ser transformada na Célula 1
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1
 					Celula1.AlteraDisponibilidade();
-					return 1;
+					return 2;
 				}
 				else{//Não há células disponiveis para este pedido
 					return -1;
@@ -66,7 +66,7 @@ public class EscolheCaminho {
 			else if(PO==1 && PF==4){//Só pode ser transformada na Célula 1
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
 					Celula1.AlteraDisponibilidade();
-					return 1;
+					return 3;
 				}
 				else{//Não há células disponiveis para este pedido
 					return -1;
@@ -109,7 +109,7 @@ public class EscolheCaminho {
 			else if(PO==2 && PF==4){//Só pode ser transformada na Célula 1
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
 					Celula1.AlteraDisponibilidade();
-					return 1;
+					return 5;
 				}
 				else{//Não há células disponiveis para este pedido
 					return -1;
@@ -118,7 +118,7 @@ public class EscolheCaminho {
 			else if(PO==2 && PF==3){//Pode ser transformada em qualquer célula de transformação
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
 					Celula1.AlteraDisponibilidade();
-					return 1;
+					return 4;
 				}
 				else if(Celula2.Disponibilidade()==true){//Verifica disponibilidade célula 2	
 					Celula2.AlteraDisponibilidade();
@@ -139,7 +139,7 @@ public class EscolheCaminho {
 			else if(PO==3 && PF==4){//Só pode ser transformada na Célula 1
 				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade célula 1	
 					Celula1.AlteraDisponibilidade();
-					return 1;
+					return 6;
 				}
 				else{//Não há células disponiveis para este pedido
 					return -1;
