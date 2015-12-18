@@ -1,6 +1,6 @@
-//Classe Singleton - s√≥ existe um objecto 
+//Classe Singleton - sÛ existe um objecto 
 public class EscolheCaminho {
-	//criar C√©lulas
+	//criar CÈlulas
 	Celula Celula1=new Celula();
 	Celula Celula2=new Celula();
 	Celula Celula3=new Celula();
@@ -23,281 +23,285 @@ public class EscolheCaminho {
 
 	//Escolhe Novo Caminho
 	public int EscolheNovoCaminho(char tipo, int PO, int PF, int destino){
-		if(tipo=='T'){//Testa todos os caminhos possiveis para transforma√ß√£o
-			if(PO==1 && PF==5){//Pode ser transformada em qualquer c√©lula de transforma√ß√£o
-				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade c√©lula 1	
+		if(tipo=='T'){//Testa todos os caminhos possiveis para transformaÁ„o
+			if(PO==1 && PF==5){//Pode ser transformada em qualquer cÈlula de transformaÁ„o
+				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade cÈlula 1	
 					Celula1.AlteraDisponibilidade();
-					return 0;//pode mudar para outro numero
+					return 0; //0
 				}
-				else if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
+				else if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
 					Celula2.AlteraDisponibilidade();
-					return 8;
+					return 8;//8
 				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3	
 					Celula3.AlteraDisponibilidade();
 					return 20;
 				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
 					Celula4.AlteraDisponibilidade();
 					return -1;
 				}
 				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
 				}
 			}	
-			else if(PO==1 && PF==2){//S√≥ pode ser transformada na C√©lula 1
-				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade c√©lula 1	
+			else if(PO==1 && PF==2){//SÛ pode ser transformada na CÈlula 1
+				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade cÈlula 1	
 					Celula1.AlteraDisponibilidade();
-					return 1;
+					return 1;//1
 				}
-				else{//N√£o h√° c√©lulas disponiveis para este pedido
+				else{//N„o h· cÈlulas disponiveis para este pedido
 					return -1;
 				}
 			}
-			else if(PO==1 && PF==3){//S√≥ pode ser transformada na C√©lula 1
-				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade c√©lula 1
+			else if(PO==1 && PF==3){//SÛ pode ser transformada na CÈlula 1
+				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade cÈlula 1
 					Celula1.AlteraDisponibilidade();
-					return 2;
+					return 2;//2 
 				}
-				else{//N√£o h√° c√©lulas disponiveis para este pedido
-					return -1;
-				}	
-			}
-			else if(PO==1 && PF==4){//S√≥ pode ser transformada na C√©lula 1
-				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade c√©lula 1	
-					Celula1.AlteraDisponibilidade();
-					return 3;
-				}
-				else{//N√£o h√° c√©lulas disponiveis para este pedido
-					return -1;
-				}
-			}
-			else if(PO==1 && PF==8){//S√≥ pode ser transformada por C2,C3,C4
-				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
-					Celula2.AlteraDisponibilidade();
-					return 11;
-				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3
-					Celula3.AlteraDisponibilidade();
-					return 23;
-				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
-					Celula4.AlteraDisponibilidade();
-					return 1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}
-			}
-			else if(PO==1 && PF==9){//S√≥ pode ser transformada por C2,C3,C4
-				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
-					Celula2.AlteraDisponibilidade();
-					return 12;
-				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
-					Celula3.AlteraDisponibilidade();
-					return 24;
-				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
-					Celula4.AlteraDisponibilidade();
-					return 1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}
-			}
-			else if(PO==2 && PF==4){//S√≥ pode ser transformada na C√©lula 1
-				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade c√©lula 1	
-					Celula1.AlteraDisponibilidade();
-					return 5;
-				}
-				else{//N√£o h√° c√©lulas disponiveis para este pedido
+				else{//N„o h· cÈlulas disponiveis para este pedido
 					return -1;
 				}	
 			}
-			else if(PO==2 && PF==3){//Pode ser transformada em qualquer c√©lula de transforma√ß√£o
-				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade c√©lula 1	
+			else if(PO==1 && PF==4){//SÛ pode ser transformada na CÈlula 1
+				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade cÈlula 1	
 					Celula1.AlteraDisponibilidade();
-					return 4;
+					return 3; //3
 				}
-				else if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
-					Celula2.AlteraDisponibilidade();
-					return 7;
-				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
-					Celula3.AlteraDisponibilidade();
-					return 19;
-				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
-					Celula4.AlteraDisponibilidade();
-					return 1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}
-			}
-			else if(PO==3 && PF==4){//S√≥ pode ser transformada na C√©lula 1
-				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade c√©lula 1	
-					Celula1.AlteraDisponibilidade();
-					return 6;
-				}
-				else{//N√£o h√° c√©lulas disponiveis para este pedido
+				else{//N„o h· cÈlulas disponiveis para este pedido
 					return -1;
 				}
 			}
-			else if(PO==5 && PF==6){//S√≥ pode ser transformada em C2,C3,C4
-				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
+			else if(PO==1 && PF==6){//SÛ pode ser transformada por C2,C3,C4
+				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
 					Celula2.AlteraDisponibilidade();
-					return 13;
+					return 9;//9
 				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
-					Celula3.AlteraDisponibilidade();
-					return 25;
-				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
-					Celula4.AlteraDisponibilidade();
-					return 1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}
-			}
-			else if(PO==5 && PF==8){//S√≥ pode ser transformada em C2,C3,C4
-				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
-					Celula2.AlteraDisponibilidade();
-					return 15;
-				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
-					Celula3.AlteraDisponibilidade();
-					return 27;
-				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
-					Celula4.AlteraDisponibilidade();
-					return 1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}
-			}
-			else if(PO==5 && PF==7){//S√≥ pode ser transformada em C2,C3,C4
-				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
-					Celula2.AlteraDisponibilidade();
-					return 14;
-				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
-					Celula3.AlteraDisponibilidade();
-					return 26;
-				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
-					Celula4.AlteraDisponibilidade();
-					return 1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}
-			}
-			else if(PO==5 && PF==9){//S√≥ pode ser transformada em C2,C3,C4
-				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
-					Celula2.AlteraDisponibilidade();
-					return 16;
-				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
-					Celula3.AlteraDisponibilidade();
-					return 28;
-				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
-					Celula4.AlteraDisponibilidade();
-					return 1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}
-			}
-			else if(PO==6 && PF==7){//pode ser transformada em C1,C2,C3,C4
-				if(Celula1.Disponibilidade()==true){//verifica disponibilidade c√©lula 1
-					Celula1.AlteraDisponibilidade();
-					return -1;
-				}
-				else if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
-					Celula2.AlteraDisponibilidade();
-					return 17;
-				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
-					Celula3.AlteraDisponibilidade();
-					return 29;
-				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
-					Celula4.AlteraDisponibilidade();
-					return 1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}
-			}
-			else if(PO==8 && PF==7){
-				if(Celula1.Disponibilidade()==true){//verifica disponibilidade c√©lula 1
-					Celula1.AlteraDisponibilidade();
-					return -1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}
-			}
-			else if(PO==1 && PF==7){
-				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
-					Celula2.AlteraDisponibilidade();
-					return 10;
-				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
-					Celula3.AlteraDisponibilidade();
-					return 22;
-				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
-					Celula4.AlteraDisponibilidade();
-					return 1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}
-			}
-			else if(PO==8 && PF==9){
-				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
-					Celula2.AlteraDisponibilidade();
-					return 18;
-				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
-					Celula3.AlteraDisponibilidade();
-					return 30;
-				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
-					Celula4.AlteraDisponibilidade();
-					return 1;
-				}
-				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
-				}		
-			}		
-			else if(PO==1 && PF==6){
-				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade c√©lula 2	
-					Celula2.AlteraDisponibilidade();
-					return 9;
-				}
-				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade c√©lula 3	
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3
 					Celula3.AlteraDisponibilidade();
 					return 21;
 				}
-				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade c√©lula 4	
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
 					Celula4.AlteraDisponibilidade();
-					return 1;
+					return -1;
 				}
 				else{
-					return -1;//N√£o h√° c√©lulas disponiveis para este pedido
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==1 && PF==7){//SÛ pode ser transformada por C2,C3,C4
+				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+					Celula2.AlteraDisponibilidade();
+					return 10; //10
+				}
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3
+					Celula3.AlteraDisponibilidade();
+					return 22;
+				}
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
+					Celula4.AlteraDisponibilidade();
+					return -1;
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==1 && PF==8){//SÛ pode ser transformada por C2,C3,C4
+				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+					Celula2.AlteraDisponibilidade();
+					return 11;//11
+				}
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3
+					Celula3.AlteraDisponibilidade();
+					return 23;
+				}
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
+					Celula4.AlteraDisponibilidade();
+					return -1;
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==1 && PF==9){//SÛ pode ser transformada por C2,C3,C4
+				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+					Celula2.AlteraDisponibilidade();
+					return 12; //12
+				}
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3	
+					Celula3.AlteraDisponibilidade();
+					return 24;
+				}
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
+					Celula4.AlteraDisponibilidade();
+					return -1;
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==2 && PF==4){//SÛ pode ser transformada na CÈlula 1
+				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade cÈlula 1	
+					Celula1.AlteraDisponibilidade();
+					return 5; //5
+				}
+				else{//N„o h· cÈlulas disponiveis para este pedido
+					return -1;
 				}	
-				
-			}	
+			}
+			else if(PO==2 && PF==3){//Pode ser transformada em qualquer cÈlula de transformaÁ„o
+				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade cÈlula 1	
+					Celula1.AlteraDisponibilidade();
+					return 4; //4
+				}
+				else if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+					Celula2.AlteraDisponibilidade();
+					return 7;//7
+				}
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3	
+					Celula3.AlteraDisponibilidade();
+					return 19;
+				}
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
+					Celula4.AlteraDisponibilidade();
+					return -1;
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==3 && PF==4){//SÛ pode ser transformada na CÈlula 1
+				if(Celula1.Disponibilidade()==true){//Verifica disponibilidade cÈlula 1	
+					Celula1.AlteraDisponibilidade();
+					return 6;//6 
+				}
+				else{//N„o h· cÈlulas disponiveis para este pedido
+					return -1;
+				}
+			}
+			else if(PO==5 && PF==6){//SÛ pode ser transformada em C2,C3,C4
+				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+					Celula2.AlteraDisponibilidade();
+					return 13;//13
+				}
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3	
+					Celula3.AlteraDisponibilidade();
+					return 25;
+				}
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
+					Celula4.AlteraDisponibilidade();
+					return -1;
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==5 && PF==8){//SÛ pode ser transformada em C2,C3,C4
+				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+					Celula2.AlteraDisponibilidade();
+					return 15;//15
+				}
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3	
+					Celula3.AlteraDisponibilidade();
+					return 27;
+				}
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
+					Celula4.AlteraDisponibilidade();
+					return -1;
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==5 && PF==7){//SÛ pode ser transformada em C2,C3,C4
+				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+					Celula2.AlteraDisponibilidade();
+					return 14;//14
+				}
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3	
+					Celula3.AlteraDisponibilidade();
+					return 26;
+				}
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
+					Celula4.AlteraDisponibilidade();
+					return -1;
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==5 && PF==9){//SÛ pode ser transformada em C2,C3,C4
+				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+					Celula2.AlteraDisponibilidade();
+					return 16;//16
+				}
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3	
+					Celula3.AlteraDisponibilidade();
+					return 28;
+				}
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
+					Celula4.AlteraDisponibilidade();
+					return -1;
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==6 && PF==7){//pode ser transformada em C1,C2,C3,C4
+				if(Celula1.Disponibilidade()==true){//verifica disponibilidade cÈlula 1
+					Celula1.AlteraDisponibilidade();
+					return 43; //43
+				}
+				else if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+					Celula2.AlteraDisponibilidade();
+					return 17;//17
+				}
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3	
+					Celula3.AlteraDisponibilidade();
+					return 29;
+				}
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
+					Celula4.AlteraDisponibilidade();
+					return -1;
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==8 && PF==7){
+				if(Celula1.Disponibilidade()==true){//verifica disponibilidade cÈlula 1
+					Celula1.AlteraDisponibilidade();
+					return 44;//44 
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}
+			else if(PO==8 && PF==9){
+				if(Celula2.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+					Celula2.AlteraDisponibilidade();
+					return 18;//18
+				}
+				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade cÈlula 3	
+					Celula3.AlteraDisponibilidade();
+					return 30;
+				}
+				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade cÈlula 4	
+					Celula4.AlteraDisponibilidade();
+					return -1;
+				}
+				else{
+					return -1;//N„o h· cÈlulas disponiveis para este pedido
+				}
+			}		
 		}
 		else if(tipo=='M'){
-			
+			if(Celula5.Disponibilidade()==true){//Verifica disponibilidade cÈlula 2	
+				Celula5.AlteraDisponibilidade();
+				return 45;//45
+			}
+			else
+				return -1;
 		}
 		else if(tipo=='U'){
 			

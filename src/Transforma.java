@@ -45,7 +45,7 @@ public class Transforma implements Runnable{
 				if(b==2 || b==3)
 				{
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-					if(caminho>=0 && caminho<=6)
+					if(caminho>=0 && caminho<=6 || caminho==19 || caminho==20)
 					{
 						Caminho.Celula1.AlteraDisponibilidade();
 						System.out.println("Disponibilidade"+Caminho.Celula1.Disponibilidade());

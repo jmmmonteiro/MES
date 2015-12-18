@@ -31,29 +31,31 @@ public class Montagem implements Runnable{
 	
 	public void run(){
 		try{
-			int ref=100;//escreve no registo 100 (TESTE)
-			ModBus.writePLC(ref,1);//escreve 1 no resgito ref
+			//disponibilidade da celula é aletrada no gestor de pedidos
+			ModBus.writePLC(46,Pb);//escreve peça de baixo no PLC
+			ModBus.writePLC(47,Pc);//escreve peça de cima no PLC
+			ModBus.writePLC(45,1);//escreve 1 no resgito 45 (dá ordem de começo)
 			int a,b;
 			System.out.println("Thread a correr");
 			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
 			do{
-				a=ModBus.readPLC(0, 1);
+				a=ModBus.readPLC(0, 45);
 			}
 			while(a==0);
 			if(a==1)//Se a passa a 1 significa que já arrancou 
 			{
-				ModBus.writePLC(ref, 0);//escreve 0 para impedir que arranque caso haja nova peça
+				ModBus.writePLC(45, 0);//escreve 0 para impedir que arranque caso haja nova peça
 			}
 			//System.out.println(a);
 			Thread.sleep(40000);//sleep 40 segundos
 			
 			do{
-				b=ModBus.readPLC(0, 1);
+				b=ModBus.readPLC(0, 45);
 				if(b==2 || b==3)
 				{
 					System.out.println("altera disponibilidade da célula");
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-					Caminho.Celula5.AlteraDisponibilidade();	
+					Caminho.Celula5.AlteraDisponibilidade();//liberta célula	
 					break;
 					//ALTERA DISP DA Célula
 				}

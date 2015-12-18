@@ -31,7 +31,7 @@ public class MES {
 		GestordePedidos gestor=GestordePedidos.getInstance();//vai buscar objecto gestor pedidos
 		while(true){
 			gestor.runCicle(); // 0 , pois não se especifica destino
-			TimeUnit.SECONDS.sleep(10);
+			TimeUnit.SECONDS.sleep(1);
 		}
 		
 		
