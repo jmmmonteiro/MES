@@ -35,11 +35,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
 					Celula3.AlteraDisponibilidade();
-					return 20;
+					return 20;//20
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 32;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -79,11 +79,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3
 					Celula3.AlteraDisponibilidade();
-					return 21;
+					return -1; //21
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 33;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -96,11 +96,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3
 					Celula3.AlteraDisponibilidade();
-					return 22;
+					return 22; //22
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 34;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -113,11 +113,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3
 					Celula3.AlteraDisponibilidade();
-					return 23;
+					return 23;//23
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 35;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -130,11 +130,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
 					Celula3.AlteraDisponibilidade();
-					return 24;
+					return 24; //24
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 36;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -160,11 +160,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
 					Celula3.AlteraDisponibilidade();
-					return 19;
+					return 19;//19
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 31;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -186,11 +186,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
 					Celula3.AlteraDisponibilidade();
-					return 25;
+					return 25;//25
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 37;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -203,11 +203,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
 					Celula3.AlteraDisponibilidade();
-					return 27;
+					return 27; //27
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 39;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -220,11 +220,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
 					Celula3.AlteraDisponibilidade();
-					return 26;
+					return 26; //26
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 38;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -237,11 +237,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
 					Celula3.AlteraDisponibilidade();
-					return 28;
+					return 28;//28
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 40;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -258,11 +258,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
 					Celula3.AlteraDisponibilidade();
-					return 29;
+					return 29; //29
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 41;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -284,11 +284,11 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3	
 					Celula3.AlteraDisponibilidade();
-					return 30;
+					return 30; //30
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();
-					return -1;
+					return 42;
 				}
 				else{
 					return -1;//Não há células disponiveis para este pedido
@@ -309,3 +309,4 @@ public class EscolheCaminho {
 	return -1;
 	}
 }
+
