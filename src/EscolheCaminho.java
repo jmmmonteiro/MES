@@ -1,4 +1,4 @@
-//Classe Singleton - só existe um objecto 
+///Classe Singleton - só existe um objecto 
 public class EscolheCaminho {
 	//criar Células
 	Celula Celula1=new Celula();
@@ -305,8 +305,22 @@ public class EscolheCaminho {
 		}
 		else if(tipo=='U'){
 			
+			if(destino==1){
+				if(Celula6.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula6.AlteraDisponibilidade();
+					return 48;//48
+				}
+			}
+			
+			else if(destino==2){
+				if(Celula7.Disponibilidade()==true){//Verifica disponibilidade célula 2	
+					Celula7.AlteraDisponibilidade();
+					return 49;//49
+				}
+			}
+			
+			return -1;
 		}
-	return -1;
-	}
+		return -1; 
+ }
 }
-

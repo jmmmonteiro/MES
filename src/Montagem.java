@@ -36,16 +36,20 @@ public class Montagem implements Runnable{
 			ModBus.writePLC(47,Pc);//escreve peça de cima no PLC
 			ModBus.writePLC(45,1);//escreve 1 no resgito 45 (dá ordem de começo)
 			int a,b;
+			boolean run=true;
 			System.out.println("Thread a correr");
 			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
 			do{
 				a=ModBus.readPLC(0, 45);
+				if(a==1 || a==2)//Se a passa a 1 significa que já arrancou 
+				{
+					ModBus.writePLC(45, 0);//escreve 0 para impedir que arranque caso haja nova peça
+					System.out.println("\nEscreve zero no PLC aaaaaaaaaaaaaa");
+					break;
+				}
 			}
-			while(a==0);
-			if(a==1)//Se a passa a 1 significa que já arrancou 
-			{
-				ModBus.writePLC(45, 0);//escreve 0 para impedir que arranque caso haja nova peça
-			}
+			while(run);
+			
 			//System.out.println(a);
 			Thread.sleep(40000);//sleep 40 segundos
 			
@@ -53,15 +57,17 @@ public class Montagem implements Runnable{
 				b=ModBus.readPLC(0, 45);
 				if(b==2 || b==3)
 				{
-					System.out.println("altera disponibilidade da célula");
+					System.out.println("\naltera disponibilidade da célula 5");
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
 					Caminho.Celula5.AlteraDisponibilidade();//liberta célula	
+					GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+					Gestor.SinalPedidoAcabado(NO);
 					break;
 					//ALTERA DISP DA Célula
 				}
 				Thread.sleep(5000);//sleep 5 segundos				
 			}
-			while(b!=2 || b!=3);
+			while(run);
 			//fim=true;
 			
 		}
@@ -71,4 +77,3 @@ public class Montagem implements Runnable{
 	}
 	
 }
-

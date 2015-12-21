@@ -228,7 +228,7 @@ public synchronized void SinalPedidoAcabado(int NO){ //synchronized para so uma 
 public boolean inserePedidosEmExecucao(String pedido){
 		
 	//System.outprintln("\nchegou vetor pedidos em execução");
-	String ss=String.format("valor aux %s na iteração", pedido);
+	//String ss=String.format("valor aux %s na iteração", pedido);
 	//System.outprintln(ss);
 	
 	
@@ -545,7 +545,7 @@ public boolean inserePedidosEmExecucao(String pedido){
 				//System.outprintf("\n Destino é %d:", auxiliar3);
 				
 				EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-				caminho=Caminho.EscolheNovoCaminho('D', auxiliar2, 0 ,auxiliar3); // 0 , pois não se especifica Peça destino
+				caminho=Caminho.EscolheNovoCaminho('U', auxiliar2, 0 ,auxiliar3); // 0 , pois não se especifica Peça destino
 				
 				//System.outprintf("\nvalor de caminho %d", caminho);
 				if( caminho>=0){ // se montagem conseguir ter caminho atribuido então fazer:
@@ -554,7 +554,7 @@ public boolean inserePedidosEmExecucao(String pedido){
 					//System.outprintf("\n o caminho é %d:", caminho);
 					contadorDescargaFeitosDaqueleTipo++;
 					// criar objecto tipo descarga
-					Thread T=new Thread (new Descarga(auxiliar,auxiliar2,auxiliar3));
+					Thread T=new Thread (new Descarga(auxiliar,auxiliar2,auxiliar3, caminho));
 					//adiciona-lo ao ArrayList de threads
 					descargas_threads.add(T);
 					//adiciona ao ArrayList de numeros para saber qual o pedido em cada posição do vetor de threads

@@ -3,16 +3,18 @@ public class Descarga implements Runnable{
 	public int P;
 	public int D;
 	public char Tipo;
+	public int caminho;
 	//public boolean fim;
 	//private int caminho;
 	
 	//Construtor Descarga cria novo descarga com as variaveis necessárias
-	public Descarga(int NumO, int Peca, int dest){
+	public Descarga(int NumO, int Peca, int dest, int cnovo){
 		NO=NumO;//define numero de ordem
 		P=Peca;//define peça original
 		D=dest;//define peça final
 		Tipo='U';	//define tipo		
 		//fim=false;
+		caminho=cnovo;
 	}
 	
 	/*public int caminho(){//Vê se existe caminho livre
@@ -30,44 +32,60 @@ public class Descarga implements Runnable{
 	
 	public void run(){
 		try{
-			int ref=200	, a;;//escreve no registo 200 (TESTE)
-			if(D==1)
-			{
-				ModBus.writePLC(ref,1);//escreve 1 no resgito ref 1 (significa que vai para PM1)
-			}
-			else if(D==2)
-			{
-				ModBus.writePLC(ref,2);//escreve 2 no resgito ref (significa que vai para PM2)
-			}
+			
+			int  a,b;//escreve no registo 200 (TESTE)
+				if(D==1) //se destino for o pusher 1
+				{
+					ModBus.writePLC(caminho, 1);//VERSÂO DE TESTE
+					ModBus.writePLC(50,P);//escreve peça a descarregar no PLC
+				}
+				else if(D==2)
+				{
+					ModBus.writePLC(caminho, 1);//VERSÂO DE TESTE
+					ModBus.writePLC(51,P);//escreve peça a descarregar no PLC
+				}	
+				
 			System.out.println("Thread a correr");
 			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
 			do{
-				a=ModBus.readPLC(0, 1);
-			}
-			while(a==0);
-			if(a==1)//Se a passa a 1 significa que já arrancou 
-			{
-				ModBus.writePLC(ref, 0);//escreve 0 para impedir que arranque caso haja nova peça
-			}
+				a=ModBus.readPLC(0, caminho);
+				if(a==1){
+					ModBus.writePLC(caminho, 0);//escreve 0 para impedir que arranque caso haja nova peça
+					System.out.println("ESCREVE 0 NO PLC AAAAAAAAAAAA");
+					break;
+				}
+			}	
+			while(true);
 			//System.out.println(a);
 			Thread.sleep(40000);//sleep 40 segundos
 			
 			
 			//SENÃO PRECISAR DE VERIFICAR FIM APAGAR
-			/*do{
-				b=ModBus.readPLC(0, 1);
+			do{
+				b=ModBus.readPLC(0, caminho);
 				if(b==2 || b==3)
 				{
-					System.out.println("altera disponibilidade da célula");
+					
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-					Caminho.Celula5.AlteraDisponibilidade();	
+					if(caminho==48){
+						System.out.println("\naltera disponibilidade da célula 6");
+						Caminho.Celula6.AlteraDisponibilidade();	
+						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+						Gestor.SinalPedidoAcabado(NO);
+					}
+					else if(caminho==49){
+						System.out.println("\naltera disponibilidade da célula 7");
+						Caminho.Celula7.AlteraDisponibilidade();
+						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+						Gestor.SinalPedidoAcabado(NO);
+					}
 					break;
 					//ALTERA DISP DA Célula
 				}
 				Thread.sleep(5000);//sleep 5 segundos				
 			}
 			while(b!=2 || b!=3);
-			//fim=true;*/
+			//fim=true;
 			
 		}
 		catch(Exception e){
