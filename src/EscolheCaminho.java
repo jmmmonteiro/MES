@@ -79,7 +79,7 @@ public class EscolheCaminho {
 				}
 				else if(Celula3.Disponibilidade()==true){//Verifica disponibilidade célula 3
 					Celula3.AlteraDisponibilidade();
-					return -1; //21
+					return 21; //21
 				}
 				else if(Celula4.Disponibilidade()==true){//Verifica disponibilidade célula 4	
 					Celula4.AlteraDisponibilidade();

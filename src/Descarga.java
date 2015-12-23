@@ -72,12 +72,18 @@ public class Descarga implements Runnable{
 						Caminho.Celula6.AlteraDisponibilidade();	
 						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
 						Gestor.SinalPedidoAcabado(NO);
+						//atualiza interface numero peças descarregadas
+						Interface face=Interface.getInstance();
+						face.adiciona_peca_descarregada(P, D);
 					}
 					else if(caminho==49){
 						System.out.println("\naltera disponibilidade da célula 7");
 						Caminho.Celula7.AlteraDisponibilidade();
 						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
 						Gestor.SinalPedidoAcabado(NO);
+						//atualiza interface numero peças descarregadas
+						Interface face=Interface.getInstance();
+						face.adiciona_peca_descarregada(P, D);
 					}
 					break;
 					//ALTERA DISP DA Célula
@@ -94,5 +100,3 @@ public class Descarga implements Runnable{
 	}
 	
 }
-
-

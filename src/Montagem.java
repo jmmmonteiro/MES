@@ -62,6 +62,9 @@ public class Montagem implements Runnable{
 					Caminho.Celula5.AlteraDisponibilidade();//liberta célula	
 					GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
 					Gestor.SinalPedidoAcabado(NO);
+					//atualiza interface numero peças descarregadas
+					Interface face=Interface.getInstance();
+					face.adiciona_peca_montada(Pb, Pc);
 					break;
 					//ALTERA DISP DA Célula
 				}
