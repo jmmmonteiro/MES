@@ -45,7 +45,7 @@ public class Descarga implements Runnable{
 					ModBus.writePLC(51,P);//escreve peça a descarregar no PLC
 				}	
 				
-			System.out.println("Thread a correr");
+			System.out.println("\nThread a correr");
 			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
 			do{
 				a=ModBus.readPLC(0, caminho);
@@ -66,29 +66,35 @@ public class Descarga implements Runnable{
 				if(b==2 || b==3)
 				{
 					
-					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
+					
 					if(caminho==48){
 						System.out.println("\naltera disponibilidade da célula 6");
-						Caminho.Celula6.AlteraDisponibilidade();	
-						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
-						Gestor.SinalPedidoAcabado(NO);
+							
+						
 						//atualiza interface numero peças descarregadas
 						Interface face=Interface.getInstance();
 						face.adiciona_peca_descarregada(P, D);
+						EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
+						Caminho.Celula6.AlteraDisponibilidade();
+						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+						Gestor.SinalPedidoAcabado(NO);
 					}
 					else if(caminho==49){
 						System.out.println("\naltera disponibilidade da célula 7");
-						Caminho.Celula7.AlteraDisponibilidade();
-						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
-						Gestor.SinalPedidoAcabado(NO);
+						
+						
 						//atualiza interface numero peças descarregadas
 						Interface face=Interface.getInstance();
 						face.adiciona_peca_descarregada(P, D);
+						EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
+						Caminho.Celula7.AlteraDisponibilidade();
+						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+						Gestor.SinalPedidoAcabado(NO);
 					}
 					break;
 					//ALTERA DISP DA Célula
 				}
-				Thread.sleep(5000);//sleep 5 segundos				
+				Thread.sleep(1000);//sleep 5 segundos				
 			}
 			while(b!=2 || b!=3);
 			//fim=true;
@@ -96,6 +102,7 @@ public class Descarga implements Runnable{
 		}
 		catch(Exception e){
 			System.out.println("Erro");
+			 e.printStackTrace(System.out); 
 		}
 	}
 	

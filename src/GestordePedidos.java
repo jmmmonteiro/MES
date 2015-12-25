@@ -105,7 +105,7 @@ public void shiftEsquerdaVetor(int posicao, String[] str/*, int tamanho*/){	//re
 	int tamanho=checkPrimeiraPosicoesVazia(str);
 	
 	if(tamanho==-1){
-		tamanho=14; 
+		tamanho=str.length;
 	}
 	
 	//System.outprintf("\nregressou shift esquerda");
@@ -125,7 +125,7 @@ public void shiftEsquerdaVetor(int posicao, String[] str/*, int tamanho*/){	//re
 				//System.outprintln("valor str");
 				//System.outprintln(str[i]);
 			}
-			if(i!=(tamanho)){
+			else if(i!=(tamanho)){
 				//System.outprintf("\n entrou else left");
 				//System.outprintln("\nvalor str");
 				str[i]=str[i+1];
@@ -191,7 +191,7 @@ public int procuraPosicao(int NO, String[] nomeVetor/*, int tamanho*/){
 		//System.outprintf("\nvalor posição livre %d", tamanho);
 		
 		if(tamanho==-1){
-			tamanho=14;
+			tamanho=nomeVetor.length;
 		}
 		int i;
 		

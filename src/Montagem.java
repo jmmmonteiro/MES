@@ -37,7 +37,7 @@ public class Montagem implements Runnable{
 			ModBus.writePLC(45,1);//escreve 1 no resgito 45 (dá ordem de começo)
 			int a,b;
 			boolean run=true;
-			System.out.println("Thread a correr");
+			System.out.println("\nThread a correr");
 			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
 			do{
 				a=ModBus.readPLC(0, 45);
@@ -57,18 +57,20 @@ public class Montagem implements Runnable{
 				b=ModBus.readPLC(0, 45);
 				if(b==2 || b==3)
 				{
+						
+					
+					//atualiza interface numero peças descarregadas
 					System.out.println("\naltera disponibilidade da célula 5");
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-					Caminho.Celula5.AlteraDisponibilidade();//liberta célula	
-					GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
-					Gestor.SinalPedidoAcabado(NO);
-					//atualiza interface numero peças descarregadas
+					Caminho.Celula5.AlteraDisponibilidade();//liberta célula
 					Interface face=Interface.getInstance();
 					face.adiciona_peca_montada(Pb, Pc);
+					GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+					Gestor.SinalPedidoAcabado(NO);
 					break;
 					//ALTERA DISP DA Célula
 				}
-				Thread.sleep(5000);//sleep 5 segundos				
+				Thread.sleep(2000);//sleep 5 segundos				
 			}
 			while(run);
 			//fim=true;
@@ -76,6 +78,7 @@ public class Montagem implements Runnable{
 		}
 		catch(Exception e){
 			System.out.println("Erro");
+			 e.printStackTrace(System.out);
 		}
 	}
 	

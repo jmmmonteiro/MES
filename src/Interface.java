@@ -237,7 +237,7 @@ public int checkPrimeiraPosicoesVazia(String[] str){
 		return -1; // se vetor pendentes cheio
 	}
 	
-public void adicionaPedidoAcabado(String str){
+public synchronized void adicionaPedidoAcabado(String str){
 	
 		System.out.printf("\n chegou a adicionar pedido acabado %s", str);
 		int posicao=checkPrimeiraPosicoesVazia(vetorPedidosAcabados);

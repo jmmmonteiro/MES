@@ -27,7 +27,7 @@ public class MES {
 		
 		Thread servidor = new Thread(new UDPservidor());
 		servidor.start();
-		
+		GUI.main(null);
 		GestordePedidos gestor=GestordePedidos.getInstance();//vai buscar objecto gestor pedidos
 		while(true){
 			gestor.runCicle(); // 0 , pois não se especifica destino

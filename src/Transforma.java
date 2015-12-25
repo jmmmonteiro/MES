@@ -1,5 +1,3 @@
-//import java.net.UnknownHostException;
-
 public class Transforma implements Runnable{
 	public int NO;
 	public int PO;
@@ -23,7 +21,7 @@ public class Transforma implements Runnable{
 			ModBus.writePLC(caminho, 1);//VERSÂO DE TESTE
 			int a,b;
 			boolean run=true;
-			System.out.println("Thread a correr");
+			System.out.println("\nThread a correr");
 			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
 			do{
 				a=ModBus.readPLC(0, caminho);
@@ -44,13 +42,10 @@ public class Transforma implements Runnable{
 				//System.out.println("ciclo");
 				if(b==2 || b==3)
 				{
-					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
+					
 					if((caminho>=0 && caminho<=6) || caminho==43 || caminho==44)
 					{
-						Caminho.Celula1.AlteraDisponibilidade();
-						System.out.println("Disponibilidade "+Caminho.Celula1.Disponibilidade());
-						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
-						Gestor.SinalPedidoAcabado(NO);
+						
 						if(caminho==0)
 						{
 							i.np1_mA_c1++;//soma uma peça produzida (P1 em P5) em MA
@@ -106,14 +101,19 @@ public class Transforma implements Runnable{
 							i.np8_mA_c1++;// p8 em p7
 							i.t_mC_c1=i.t_mC_c1+30;
 						}
+
+						
+						EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
+						Caminho.Celula1.AlteraDisponibilidade();
+						System.out.println("Disponibilidade "+Caminho.Celula1.Disponibilidade());
+						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+						Gestor.SinalPedidoAcabado(NO);
 					}
 					
 					else if(caminho>=7 && caminho<=18)
 					{
-						Caminho.Celula2.AlteraDisponibilidade();
-						System.out.println("Disponibilidade "+Caminho.Celula2.Disponibilidade());
-						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
-						Gestor.SinalPedidoAcabado(NO);
+						
+						
 						if(caminho==7)
 						{
 							i.np2_mA_c2++;//p2 em p3
@@ -191,14 +191,17 @@ public class Transforma implements Runnable{
 							i.np8_mB_c2++;//p8 em p9
 							i.t_mB_c2=i.t_mB_c2+20;
 						}
+						
+						EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
+						Caminho.Celula2.AlteraDisponibilidade();
+						System.out.println("Disponibilidade "+Caminho.Celula2.Disponibilidade());
+						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+						Gestor.SinalPedidoAcabado(NO);
 					}
 					
 					else if(caminho>=19 && caminho<=30)
 					{
-						Caminho.Celula3.AlteraDisponibilidade();
-						System.out.println("Disponibilidade "+Caminho.Celula3.Disponibilidade());
-						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
-						Gestor.SinalPedidoAcabado(NO);
+						
 						if(caminho==19)
 						{
 							i.np2_mA_c3++;//p2 em p3
@@ -276,14 +279,19 @@ public class Transforma implements Runnable{
 							i.np8_mB_c3++;//p8 em p9
 							i.t_mB_c3=i.t_mB_c3+20;
 						}
+
+						
+						EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
+						Caminho.Celula3.AlteraDisponibilidade();
+						System.out.println("Disponibilidade "+Caminho.Celula3.Disponibilidade());
+						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+						Gestor.SinalPedidoAcabado(NO);
 					}
 					
 					else if(caminho>=31 && caminho<=42)
 					{
-						Caminho.Celula4.AlteraDisponibilidade();
-						System.out.println("Disponibilidade "+Caminho.Celula4.Disponibilidade());
-						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
-						Gestor.SinalPedidoAcabado(NO);
+						
+						
 						if(caminho==31)
 						{
 							i.np2_mA_c4++;//p2 em p3
@@ -361,12 +369,18 @@ public class Transforma implements Runnable{
 							i.np8_mB_c4++;//p8 em p9
 							i.t_mB_c4=i.t_mB_c4+20;
 						}
+						
+						EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
+						Caminho.Celula4.AlteraDisponibilidade();
+						System.out.println("Disponibilidade "+Caminho.Celula4.Disponibilidade());
+						GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
+						Gestor.SinalPedidoAcabado(NO);
 					}
 					break;
 					//ALTERA DISP DA Célula
 					
 				}
-							
+				Thread.sleep(1000);//sleep 5 segundos			
 			}
 			while(run);
 			//fim=true;
@@ -374,6 +388,7 @@ public class Transforma implements Runnable{
 		}
 		catch(Exception e){
 			System.out.println("Erro");
+			 e.printStackTrace(System.out);
 		}
 	}
 	
