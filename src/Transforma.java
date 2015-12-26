@@ -93,7 +93,7 @@ public class Transforma implements Runnable{
 		}
 		catch(Exception e){
 			System.out.println("Erro");
-			 e.printStackTrace(System.out);
+			e.printStackTrace(System.out);
 		}
 	}
 	

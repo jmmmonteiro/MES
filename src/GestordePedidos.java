@@ -202,7 +202,7 @@ public int procuraPosicao(int NO, String[] nomeVetor/*, int tamanho*/){
 			
 			//System.outprintf("\n entrou for");
 			
-			if(nomeVetor[i].toLowerCase().contains(str.toLowerCase())){ //quando encontrar o elemento do qual se quer saber a posição
+			if(nomeVetor[i].contains(str)){ //quando encontrar o elemento do qual se quer saber a posição
 				//System.outprintf("\n valor supostamente igual %s",nomeVetor[i]);
 				//System.outprintf("\nvalor do i: %d", i);
 				return i; //retorna a posição do elemento no vetor
@@ -215,6 +215,8 @@ public int procuraPosicao(int NO, String[] nomeVetor/*, int tamanho*/){
 public synchronized void SinalPedidoAcabado(int NO){ //synchronized para so uma thread por fazer isto de cada vez
 	
 	int posicao=procuraPosicao(NO, pedidosEmExecucao/*, 6*/); //procura posicao elemento 
+	System.out.println("\nPosi��o" +posicao);
+	System.out.println("\nNumero de ordem" +NO);
 	String auxiliar=pedidosEmExecucao[posicao];
 	//mandar para interface
 	//System.outprintf("\nManda para interface %s",pedidosEmExecucao[posicao]);
