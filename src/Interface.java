@@ -1,6 +1,6 @@
 public class Interface {
-	public int nproduzidas;
-	public int n_em_prod;
+	public int nproduzidas=0;
+	public int n_em_prod=0;
 	public int t_mA_c1=0;
 	public int t_mC_c1=0;
 	public int t_mA_c2=0;
@@ -9,6 +9,7 @@ public class Interface {
 	public int t_mB_c3=0;
 	public int t_mA_c4=0;
 	public int t_mB_c4=0;
+	public int emTransf=0;
 	//CELULA 1
 	public int np1_mA_c1=0;
 	public int np1_mC_c1=0;
@@ -87,7 +88,8 @@ public class Interface {
 	public int np9_mB_c4=0;
 	
 	//MONTAGEM E DESCARGA
-	private int num_descarga_d1_total=0;
+	public int emDesc=0;
+	public int num_descarga_d1_total=0;
 	private int num_descarga_d1_p1=0;
 	private int num_descarga_d1_p2=0;
 	private int num_descarga_d1_p3=0;
@@ -98,7 +100,7 @@ public class Interface {
 	private int num_descarga_d1_p8=0;
 	private int num_descarga_d1_p9=0;
 	
-	private int num_descarga_d2_total=0;
+	public int num_descarga_d2_total=0;
 	private int num_descarga_d2_p1=0;
 	private int num_descarga_d2_p2=0;
 	private int num_descarga_d2_p3=0;
@@ -108,7 +110,7 @@ public class Interface {
 	private int num_descarga_d2_p7=0;
 	private int num_descarga_d2_p8=0;
 	private int num_descarga_d2_p9=0;
-	
+	public int emMont=0;
 	int num_montagens_total=0;
 	
 	int num_P1_P1=0;
@@ -248,6 +250,328 @@ public synchronized void adicionaPedidoAcabado(String str){
 		else 
 			System.out.println("Pedido acabado nÃ£o adicionado, pois vetor cheio");
 	}
+public synchronized void cMontagem(){//começa montagem (adiciona 1 a montagem em execução)
+	emMont++;
+}
+
+public synchronized void cDescarga(){//começa Descarga (adiciona 1 a descarga em execucção
+	emDesc++;
+}
+
+public synchronized void cTransforma(){//começa Transforma (adiciona 1 a transforma em execucção
+	emTransf++;
+}
+
+public synchronized void aTransforma(){//acaba Transforma (subtrai 1 a Transforma em execução)
+	emTransf--;
+}
+
+
+public synchronized void aMontagem(){//acaba Montagem (subtrai 1 a Montagem em execução)
+	emMont--;
+}
+
+public synchronized void aDescarga(){//acaba Descarga (subtrai 1 a Descarga em execução)
+	emDesc--;
+}
+
+
+public synchronized void adiciona_peca_transformada(int caminho){
+
+	nproduzidas++;//conta nas total produzidas da fabrica 
+	
+	if(caminho==0)
+	{
+		np1_mA_c1++;//soma uma peça produzida (P1 em P5) em MA
+		t_mA_c1=t_mA_c1+25;//soma 25 segundos ao tempo da máquina
+		System.out.println("numero de peças p1 em MA " +np1_mA_c1);
+		System.out.println("tempo máquina c1 MA "+t_mA_c1);
+	}
+	else if(caminho==1)
+	{
+		np1_mC_c1++;//soma uma peça produzida (P1 em P2) em MC
+		t_mC_c1=t_mC_c1+25;
+	}
+	else if(caminho==2)
+	{
+		np1_mC_c1++;//soma uma peça produzida em MC p1 em p2
+		np2_mA_c1++;//soma uma peça produzida em MC p2 em p3
+		t_mC_c1=t_mC_c1+25;
+		t_mA_c1=t_mA_c1+20;
+	}
+	else if(caminho==3)
+	{
+		np1_mC_c1++;//soma uma peça produzida em MC p1 em p2
+		np2_mA_c1++;//soma uma peça produzida em MC p2 em p3
+		np3_mC_c1++;//soma uma peça produzida em MC p3 em p4
+		t_mC_c1=t_mC_c1+25;
+		t_mA_c1=t_mA_c1+20;
+		t_mC_c1=t_mC_c1+10;
+	}
+	else if(caminho==4)
+	{
+		np2_mA_c1++;//soma uma peça produzida em MC p2 em p3
+		t_mA_c1=t_mA_c1+20;
+	}
+	else if(caminho==5) //p2 em p4
+	{
+		np2_mA_c1++;//soma uma peça produzida em MC p2 em p3
+		np3_mC_c1++;//soma uma peça produzida em MC p3 em p4
+		t_mA_c1=t_mA_c1+20;
+		t_mC_c1=t_mC_c1+10;
+	}
+	else if(caminho==6)
+	{
+		np3_mC_c1++;//soma uma peça produzida em MC p3 em p4
+		t_mC_c1=t_mC_c1+10;
+	}
+	else if(caminho==43)
+	{
+		np6_mA_c1++;//p6 em p7
+		t_mA_c1=t_mA_c1+25;
+	}
+	else if(caminho==44)
+	{
+		np8_mA_c1++;// p8 em p7
+		t_mC_c1=t_mC_c1+30;
+	}
+	
+	else if(caminho==7)
+	{
+		np2_mA_c2++;//p2 em p3
+		t_mA_c2=t_mA_c2+20;
+	}
+	else if(caminho==8)
+	{
+		np1_mA_c2++;
+		t_mA_c2=t_mA_c2+25;
+	}
+	else if(caminho==9)
+	{
+		np1_mA_c2++;//p1 em p5
+		np5_mB_c2++;//p5 em p6
+		t_mA_c2=t_mA_c2+25;
+		t_mB_c2=t_mB_c2+25;
+	}
+	else if(caminho==10)//p1 em p7
+	{
+		np1_mA_c2++;//p1 em p5
+		np5_mB_c2++;//p5 em p6
+		np6_mA_c2++;//p6 em p7
+		t_mA_c2=t_mA_c2+25;
+		t_mB_c2=t_mB_c2+25;
+		t_mA_c2=t_mA_c2+25;
+		
+	}
+	else if(caminho==11)//p1 em p8
+	{
+		np1_mA_c2++;//p1 em p5
+		np5_mB_c2++;//p5 em p8
+		t_mA_c2=t_mA_c2+25;
+		t_mB_c2=t_mB_c2+25;
+	}
+	else if(caminho==12)//p1 em p9
+	{
+		np1_mA_c2++;//p1 em p5
+		np5_mB_c2++;//p5 em p8
+		np8_mB_c2++;//p8 em p9
+		t_mA_c2=t_mA_c2+25;
+		t_mB_c2=t_mB_c2+25;
+		t_mB_c2=t_mB_c2+20;
+	}
+	else if(caminho==13)//p5 em p6
+	{
+		np5_mB_c2++;//p5 em p6
+		t_mB_c2=t_mB_c2+25;
+	}
+	else if(caminho==14)//p5 em p7
+	{
+		np5_mB_c2++;//p5 em p6
+		np6_mA_c2++;//p6 em p7
+		t_mB_c2=t_mB_c2+25;
+		t_mA_c2=t_mA_c2+25;
+	}
+	else if(caminho==15)//p5 em p8
+	{
+		np5_mB_c2++;//p5 em p8
+		t_mB_c2=t_mB_c2+25;
+	}
+	else if(caminho==16)//p5 em p9
+	{
+		np5_mB_c2++;//p5 em p8
+		np8_mB_c2++;//p8 em p9
+		t_mB_c2=t_mB_c2+25;
+		t_mB_c2=t_mB_c2+20;
+	}
+	else if(caminho==17)//p6 em p7
+	{
+		np6_mA_c2++;//p6 em p7
+		t_mA_c2=t_mA_c2+25;
+	}
+	else if(caminho==18)//p8 em p8
+	{
+		np8_mB_c2++;//p8 em p9
+		t_mB_c2=t_mB_c2+20;
+	}
+	
+	else if(caminho==19)
+	{
+		np2_mA_c3++;//p2 em p3
+		t_mA_c3=t_mA_c3+20;
+	}
+	else if(caminho==20)
+	{
+		np1_mA_c3++;//p1 em p5
+		t_mA_c3=t_mA_c3+25;
+	}
+	else if(caminho==21)
+	{
+		np1_mA_c3++;//p1 em p5
+		np5_mB_c3++;//p5 em p6
+		t_mA_c3=t_mA_c3+25;
+		t_mB_c3=t_mB_c3+25;
+	}
+	else if(caminho==22)//p1 em p7
+	{
+		np1_mA_c3++;//p1 em p5
+		np5_mB_c3++;//p5 em p6
+		np6_mA_c3++;//p6 em p7
+		t_mA_c3=t_mA_c3+25;
+		t_mB_c3=t_mB_c3+25;
+		t_mA_c3=t_mA_c3+25;
+		
+	}
+	else if(caminho==23)//p1 em p8
+	{
+		np1_mA_c3++;//p1 em p5
+		np5_mB_c3++;//p5 em p8
+		t_mA_c3=t_mA_c3+25;
+		t_mB_c3=t_mB_c3+25;
+	}
+	else if(caminho==24)//p1 em p9
+	{
+		np1_mA_c3++;//p1 em p5
+		np5_mB_c3++;//p5 em p8
+		np8_mB_c3++;//p8 em p9
+		t_mA_c3=t_mA_c3+25;
+		t_mB_c3=t_mB_c3+25;
+		t_mB_c3=t_mB_c3+20;
+	}
+	else if(caminho==25)//p5 em p6
+	{
+		np5_mB_c3++;//p5 em p6
+		t_mB_c3=t_mB_c3+25;
+	}
+	else if(caminho==26)//p5 em p7
+	{
+		np5_mB_c3++;//p5 em p6
+		np6_mA_c3++;//p6 em p7
+		t_mB_c3=t_mB_c3+25;
+		t_mA_c3=t_mA_c3+25;
+	}
+	else if(caminho==27)//p5 em p8
+	{
+		np5_mB_c3++;//p5 em p8
+		t_mB_c3=t_mB_c3+25;
+	}
+	else if(caminho==28)//p5 em p9
+	{
+		np5_mB_c3++;//p5 em p8
+		np8_mB_c3++;//p8 em p9
+		t_mB_c3=t_mB_c3+25;
+		t_mB_c3=t_mB_c3+20;
+	}
+	else if(caminho==29)//p6 em p7
+	{
+		np6_mA_c3++;//p6 em p7
+		t_mA_c3=t_mA_c3+25;
+	}
+	else if(caminho==30)//p8 em p9
+	{
+		np8_mB_c3++;//p8 em p9
+		t_mB_c3=t_mB_c3+20;
+	}
+	
+	else if(caminho==31)
+	{
+		np2_mA_c4++;//p2 em p3
+		t_mA_c4=t_mA_c4+20;
+	}
+	else if(caminho==32)
+	{
+		np1_mA_c4++;//p1 em p5
+		t_mA_c4=t_mA_c4+25;
+	}
+	else if(caminho==33)
+	{
+		np1_mA_c4++;//p1 em p5
+		np5_mB_c4++;//p5 em p6
+		t_mA_c4=t_mA_c4+25;
+		t_mB_c4=t_mB_c4+25;
+	}
+	else if(caminho==34)//p1 em p7
+	{
+		np1_mA_c4++;//p1 em p5
+		np5_mB_c4++;//p5 em p6
+		np6_mA_c4++;//p6 em p7
+		t_mA_c4=t_mA_c4+25;
+		t_mB_c4=t_mB_c4+25;
+		t_mA_c4=t_mA_c4+25;
+		
+	}
+	else if(caminho==35)//p1 em p8
+	{
+		np1_mA_c4++;//p1 em p5
+		np5_mB_c4++;//p5 em p8
+		t_mA_c4=t_mA_c4+25;
+		t_mB_c4=t_mB_c4+25;
+	}
+	else if(caminho==36)//p1 em p9
+	{
+		np1_mA_c4++;//p1 em p5
+		np5_mB_c4++;//p5 em p8
+		np8_mB_c4++;//p8 em p9
+		t_mA_c4=t_mA_c4+25;
+		t_mB_c4=t_mB_c4+25;
+		t_mB_c4=t_mB_c4+20;
+	}
+	else if(caminho==37)//p5 em p6
+	{
+		np5_mB_c4++;//p5 em p6
+		t_mB_c4=t_mB_c4+25;
+	}
+	else if(caminho==38)//p5 em p7
+	{
+		np5_mB_c4++;//p5 em p6
+		np6_mA_c4++;//p6 em p7
+		t_mB_c4=t_mB_c4+25;
+		t_mA_c4=t_mA_c4+25;
+	}
+	else if(caminho==39)//p5 em p8
+	{
+		np5_mB_c4++;//p5 em p8
+		t_mB_c4=t_mB_c4+25;
+	}
+	else if(caminho==40)//p5 em p9
+	{
+		np5_mB_c4++;//p5 em p8
+		np8_mB_c4++;//p8 em p9
+		t_mB_c4=t_mB_c4+25;
+		t_mB_c4=t_mB_c4+20;
+	}
+	else if(caminho==41)//p6 em p7
+	{
+		np6_mA_c4++;//p6 em p7
+		t_mA_c4=t_mA_c4+25;
+	}
+	else if(caminho==42)//p8 em p9
+	{
+		np8_mB_c4++;//p8 em p9
+		t_mB_c4=t_mB_c4+20;
+	}
+		
+}
+
 public synchronized void adiciona_peca_descarregada(int tipoPeca, int destino){
 	
 	if(destino==1){

@@ -32,6 +32,7 @@ public class Descarga implements Runnable{
 	
 	public void run(){
 		try{
+			Interface face=Interface.getInstance();
 			
 			int  a,b;//escreve no registo 200 (TESTE)
 				if(D==1) //se destino for o pusher 1
@@ -44,7 +45,7 @@ public class Descarga implements Runnable{
 					ModBus.writePLC(caminho, 1);//VERSÂO DE TESTE
 					ModBus.writePLC(51,P);//escreve peça a descarregar no PLC
 				}	
-				
+			face.cDescarga();
 			System.out.println("\nThread a correr");
 			//IMPEDE QUE ARRANQUE COM OUTRA PEÇA
 			do{
@@ -72,7 +73,7 @@ public class Descarga implements Runnable{
 							
 						
 						//atualiza interface numero peças descarregadas
-						Interface face=Interface.getInstance();
+						
 						face.adiciona_peca_descarregada(P, D);
 						EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
 						Caminho.Celula6.AlteraDisponibilidade();
@@ -84,7 +85,6 @@ public class Descarga implements Runnable{
 						
 						
 						//atualiza interface numero peças descarregadas
-						Interface face=Interface.getInstance();
 						face.adiciona_peca_descarregada(P, D);
 						EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
 						Caminho.Celula7.AlteraDisponibilidade();
@@ -98,7 +98,7 @@ public class Descarga implements Runnable{
 			}
 			while(b!=2 || b!=3);
 			//fim=true;
-			
+			face.aDescarga();
 		}
 		catch(Exception e){
 			System.out.println("Erro");

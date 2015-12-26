@@ -31,10 +31,12 @@ public class Montagem implements Runnable{
 	
 	public void run(){
 		try{
+			Interface face=Interface.getInstance();
 			//disponibilidade da celula é aletrada no gestor de pedidos
 			ModBus.writePLC(46,Pb);//escreve peça de baixo no PLC
 			ModBus.writePLC(47,Pc);//escreve peça de cima no PLC
 			ModBus.writePLC(45,1);//escreve 1 no resgito 45 (dá ordem de começo)
+			face.cMontagem();
 			int a,b;
 			boolean run=true;
 			System.out.println("\nThread a correr");
@@ -63,7 +65,7 @@ public class Montagem implements Runnable{
 					System.out.println("\naltera disponibilidade da célula 5");
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
 					Caminho.Celula5.AlteraDisponibilidade();//liberta célula
-					Interface face=Interface.getInstance();
+					
 					face.adiciona_peca_montada(Pb, Pc);
 					GestordePedidos Gestor=GestordePedidos.getInstance();  // manda ao gestor pedidos a dizer que acabou 
 					Gestor.SinalPedidoAcabado(NO);
@@ -74,6 +76,7 @@ public class Montagem implements Runnable{
 			}
 			while(run);
 			//fim=true;
+			face.aMontagem();
 			
 		}
 		catch(Exception e){
