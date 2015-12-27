@@ -215,6 +215,9 @@ public class Interface {
 	//Singleton
 	
 	String[] vetorPedidosAcabados = new String [40]; // vetor com todos pedidos acabados
+	String[] vetorPedidosPendentesInterface = new String[15];
+	String[] pedidosEmExecucaoInterface = new String[7];
+	String[] vetorPedidosAcabadosInterface = new String [60];
 	
 // Dizer a primeira posi√ß√£o livre do vetorPedidosAcabados onde inserir
 public int checkPrimeiraPosicoesVazia(String[] str){
@@ -239,7 +242,7 @@ public int checkPrimeiraPosicoesVazia(String[] str){
 		return -1; // se vetor pendentes cheio
 	}
 	
-public synchronized void adicionaPedidoAcabado(String str){
+/*public synchronized void adicionaPedidoAcabado(String str){
 	
 		System.out.printf("\n chegou a adicionar pedido acabado %s", str);
 		int posicao=checkPrimeiraPosicoesVazia(vetorPedidosAcabados);
@@ -250,6 +253,46 @@ public synchronized void adicionaPedidoAcabado(String str){
 		else 
 			System.out.println("Pedido acabado n√£o adicionado, pois vetor cheio");
 	}
+*/
+public synchronized void adiciona_pedido_pendente(String pedido){
+	
+	//System.out.printf("\n chegou a adicionar pedido pendentes interface %s", pedido);
+	int posicao=checkPrimeiraPosicoesVazia(vetorPedidosPendentesInterface);
+	//System.out.printf("\n posicao onde insere no vetor pedidos pendesntes %d", posicao);
+	if( (posicao)!=-1){
+		//vetorPedidosPendentesInterface[posicao]="";
+		vetorPedidosPendentesInterface[posicao]=pedido;
+		System.out.printf("\nPedido pendentes adicionado interface %s", vetorPedidosPendentesInterface[posicao]);
+	}
+	else 
+		System.out.println("\nPedido pendentes nao adicionado, pois vetor cheio");
+}
+
+public synchronized void removePedido(int posicao, String str[]){
+	
+	int i=0;
+	int tamanho=checkPrimeiraPosicoesVazia(str);
+	
+	if(tamanho==-1){
+		tamanho=str.length; 
+	}
+	tamanho=tamanho-1;
+	i=posicao;
+	
+		while(i<=tamanho){
+			
+			if(i==(tamanho)){ // n„o dava para fazer dentro para ultima posiÁ„o
+				str[i]="";
+			}
+			if(i!=(tamanho)){
+				str[i]=str[i+1];
+				
+			}
+			i++;	
+		}
+	
+}
+
 public synchronized void cMontagem(){//comeÁa montagem (adiciona 1 a montagem em execuÁ„o)
 	emMont++;
 }
@@ -273,6 +316,103 @@ public synchronized void aMontagem(){//acaba Montagem (subtrai 1 a Montagem em e
 
 public synchronized void aDescarga(){//acaba Descarga (subtrai 1 a Descarga em execuÁ„o)
 	emDesc--;
+}
+
+public synchronized void reordenaVetor(int posicao, String[] str){ // quando um pedido n„o pode ser realizado passa para o fim da fila
+	
+	//System.out.printf("\nchegou reordena vetor");
+	String aux;
+	int finalOndeInserir;
+	
+	aux = str[posicao];
+	//System.outprintf("\n valor aux %s", aux);
+	
+	removePedido(posicao, str);
+	//System.outprintf("\n voltou de remove pedido");
+	finalOndeInserir=checkPrimeiraPosicoesVazia(str); //para inserir na primeira posiÁ„o vazia que encontrar
+	//System.out.printf("\n onde isnerir %d",finalOndeInserir);
+	str[finalOndeInserir]=aux;
+	//System.out.printf("\n posiÁ„o onde inserido");
+	//System.out.printf(str[finalOndeInserir]);
+	
+}
+
+public synchronized String busca(String[] vetor, String aProcurar){
+	
+	int i, numPosicoes;
+	String retornar=null;
+	
+	numPosicoes=checkPrimeiraPosicoesVazia(vetor); //tamanho do vetor
+	
+	if(numPosicoes==-1){
+		numPosicoes=vetor.length;		
+	}
+	
+	numPosicoes=numPosicoes-1;
+	//System.out.printf("\nNumero posiÁıes %d", numPosicoes);
+	//System.out.printf("\nParte a procurar %s", aProcurar);
+	
+	for(i=0; i<=numPosicoes; i++){
+		String[] parts = vetor[i].split("                    ");
+		//String part1 = parts[0]; // 
+		String part2 = parts[1]; // 
+		//System.out.printf("Segunda parte do vetor dividido %s", part2);
+		
+		if (part2.contains(aProcurar)==true){
+			retornar=vetor[i];
+			//System.out.printf("\n string a retornar a para inserir pedidos em execuÁ„o", retornar);
+			return retornar;
+		
+		}
+	}	
+	System.out.printf("\n Nao encontrou pedido");
+	return retornar;
+}
+
+public synchronized void adiciona_pedido_execucao(String pedido){
+
+	//System.out.printf("\n chegou a adicionar pedidos em execucao interface %s", pedido);
+	int posicao=checkPrimeiraPosicoesVazia(pedidosEmExecucaoInterface);
+	if( (posicao)!=-1){
+		
+		//para procurar pedido, nos pedidos pendentes
+		String primeira_parte=pedido.substring(0, 7);
+		
+		//procura e retorna a informaÁ„o do pedido pendente igual ao em execuÁ„o 
+		String axu=busca(vetorPedidosPendentesInterface,primeira_parte);
+		if(axu==null){
+			System.out.println("\nN¬O ENCONTRO PEDIDO PENDENTE COMPATIVEL COM PEDIDO AGORA ADICIONADO A EM EXECU«√O INTERFACE");
+			return;
+		}
+		
+		//adiciona a hora de comeÁo do pedido em execuÁ„o 
+		//pedidosEmExecucaoInterface[posicao]="";
+		
+		pedidosEmExecucaoInterface[posicao]=axu.substring(0, 8)+"                    "+pedido;
+		System.out.printf("\nPedido em execucao adicionado interface %s", pedidosEmExecucaoInterface[posicao]);
+	}
+	else 
+	System.out.println("Pedido execucao nao adicionado, pois vetor cheio");
+}
+
+public synchronized void adicionaPedidoAcabado(String pedido){
+	
+	//System.out.printf("\n chegou a adicionar pedido acabado %s", pedido);
+	int posicao=checkPrimeiraPosicoesVazia(vetorPedidosAcabadosInterface);
+	if( (posicao)!=-1){
+		//para procurar pedido, nos pedidos pendentes
+		String primeira_parte=pedido.substring(0, 9);
+		
+		//procura e retorna a informaÁ„o do pedido pendente igual ao em execuÁ„o 
+		String axu=busca(pedidosEmExecucaoInterface,primeira_parte);
+		
+		//adiciona a hora de comeÁo do pedido em execuÁ„o 
+		//vetorPedidosAcabadosInterface[posicao]="";
+		vetorPedidosAcabadosInterface[posicao]=axu+"             "+pedido.substring(pedido.lastIndexOf("                    ")+1);
+		System.out.printf("\nPedido acabado adicionado %s", vetorPedidosAcabadosInterface[posicao]);
+	}
+	else 
+		System.out.println("Pedido acabado nao adicionado, pois vetor cheio");
 }
 
 

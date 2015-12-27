@@ -1,13 +1,17 @@
 import java.util.ArrayList;
 //import java.util.concurrent.TimeUnit;
+import java.util.Date;
+import java.util.*;
+import java.text.*;
+
 
 public class GestordePedidos{  
 	
-	String[] vetorPedidosPendentes = new String[15]; // apenas pedidos pendentes vai apagando Ã¡ medida que vÃ£o 
-	// passando a execuÃ§Ã£o 
+	String[] vetorPedidosPendentes = new String[15]; // apenas pedidos pendentes vai apagando á medida que vão 
+	// passando a execução 
 	int numPedido=0;	
 	String[] pedidosEmExecucao = new String[7]; // vetor com apenas pedidos em execucao, como so temos 6 celulas
-	//sÃ³ pode trabalhar em 6 processos em paralelo
+	//só pode trabalhar em 6 processos em paralelo
 	
 	ArrayList <Thread> transformacoes_threads = new ArrayList<Thread>(); //arrayList para transformacoes 
 	ArrayList <Integer> transformacoes_threads_elementos = new ArrayList<Integer>(); //para saber qual pedido em que thread
@@ -21,14 +25,78 @@ public class GestordePedidos{
 	private static GestordePedidos instance;
 	private GestordePedidos(){}                                                
 	
-	public static GestordePedidos getInstance(){
+	public synchronized static GestordePedidos getInstance(){
 		if(instance==null){
 			instance=new GestordePedidos();	
 		}
 		return instance;
 	}	
 
+//***********************************************************************************************************************************************
+// devolve string com hora:minuto:segundos
+public synchronized String tempo(){
+		
+		String hora;
+		Date date = new Date();
+		SimpleDateFormat ft=new SimpleDateFormat ("HH:mm:ss");
+	    hora=ft.format(date);
+		
+		return hora;
+	}	
+
+//função para atualizar a interface
+public  synchronized void mandaInterface(int posicao, String pedido, int num){
 	
+	Interface face=Interface.getInstance();
+	String temp=tempo();
+	String aux;
+	
+	if(num==0){//pega no novo pedido inserido acescenta-lhe hora(chegou sistema)+pedido e manda pedido para interface
+		
+		aux=temp+"                    "+pedido;
+		face.adiciona_pedido_pendente(aux);
+	}
+	else if(num==1){//pega pedido e passa a em execução pedido+hora(arranque execução)
+		
+		aux=pedido+"                    "+temp;
+		face.adiciona_pedido_execucao(aux);
+	}
+	else if(num==2){//pega pedido em execução acabado e soma-lhe hora atual e manda para inteface pedido acabado
+		
+		aux=pedido+"                    "+temp;
+		face.adicionaPedidoAcabado(aux);
+		face.removePedido(posicao, face.pedidosEmExecucaoInterface);
+		
+	}
+	else if(num==3){
+		face.removePedido(posicao, face.vetorPedidosPendentesInterface);
+	}
+	else if(num==4){
+		face.removePedido(posicao, face.pedidosEmExecucaoInterface);
+	}
+	else if(num==5){
+		face.reordenaVetor(posicao, face.vetorPedidosPendentesInterface);
+	}
+	else if(num==6){
+		face.reordenaVetor(posicao, face.pedidosEmExecucaoInterface);
+	}
+	
+	//atualiza pedido pendente, pois so parte foi posta em execução
+	else if(num==100){
+		//buscar pedido antigo
+		String axu=face.vetorPedidosPendentesInterface[posicao];
+		//novo horas do anterior + novo pedido
+		face.vetorPedidosPendentesInterface[posicao]="";
+		face.vetorPedidosPendentesInterface[posicao]=axu.substring(0, 8)+"                    "+pedido;
+		face.reordenaVetor(posicao, face.vetorPedidosPendentesInterface);
+	}
+	
+}
+
+//*****************************************************************************************************************************************************
+
+
+
 	
 	// inserir novo pedido pendente, MES que solicita                                (VERIFICADA)              
 public boolean novoPedidoPendente(String pedido){
@@ -37,55 +105,59 @@ public boolean novoPedidoPendente(String pedido){
 		
 		int aux=checkPrimeiraPosicoesVazia(vetorPedidosPendentes);
 		if( aux==-1){
-			//System.outprintln("\nErro impossÃ­vel inserir vetor pedidos pendentes cheio");
+			//System.outprintln("\nErro impossível inserir vetor pedidos pendentes cheio");
 			return false;
 		}
 		/*
 		if( aux==0){
-			vetorPedidosPendentes[aux]=pedido; // a funÃ§Ã£o checkPrimeira... devolve a primeira posicao vazia  
-			//excepto se a primeira posiÃ§Ã£o vazia for zero
+			vetorPedidosPendentes[aux]=pedido; // a função checkPrimeira... devolve a primeira posicao vazia  
+			//excepto se a primeira posição vazia for zero
 			//System.outprintln("Pedido inserido com sucesso");
 			return true;
 		}
 		*/
 		else{
-			vetorPedidosPendentes[aux]=pedido; // a funÃ§Ã£o checkPrimeira... devolve a primeira posicao vazia 
+			vetorPedidosPendentes[aux]=pedido; // a função checkPrimeira... devolve a primeira posicao vazia 
 			//System.outprintf("\nPedido inserido com sucesso %s", vetorPedidosPendentes[aux]);
 			////System.outprintln(vetorPedidosPendentes[aux]);
+			
+//*************************************************************************************************************************************************			
+			mandaInterface(0, pedido, 0); //ALTERADO PARA USAR FUNÇÃO PARA MANDAR PARA INTERFACE	
+//*************************************************************************************************************************************************			
 			return true;
 			
 		}
 		
 	}
 	
-	//encontra a primeira posiÃ§Ã£o vazia no vetor ....                          (VERIFICADA) 
+	//encontra a primeira posição vazia no vetor ....                          (VERIFICADA) 
 public synchronized int checkPrimeiraPosicoesVazia(String[] str){                         //synchronized     <---------
 		
 		int i;
 		
 		//System.outprintln("\ncheckPrimeiraPosicoesVazia");
 		
-		for(i=0; i<str.length;i++){ // pois lenght por exemplo 15, mas comeÃ§a no zero logo 14 posiÃ§Ãµes
+		for(i=0; i<str.length;i++){ // pois lenght por exemplo 15, mas começa no zero logo 14 posições
 			
-			//System.outprintln("\nentrou for posiÃ§Ãµes vazias");
+			//System.outprintln("\nentrou for posições vazias");
 			
-			////System.outprintln("\nvalor do primeiro elemento vetor passado funÃ§Ã£o " +str[i] );
+			////System.outprintln("\nvalor do primeiro elemento vetor passado função " +str[i] );
 			
-			// pois no shift esquerda quando quero dizer que estÃ¡ livre faÃ§o str[i]="" e fica so o caracter '\0'
+			// pois no shift esquerda quando quero dizer que está livre faço str[i]="" e fica so o caracter '\0'
 			if( ((str[i] == null) || (str[i].length()<=1)) /*&& (vetorPedidosPendentes[i].length() == 0)*/ ){ 
 				
 				//System.outprintf("\nentrou if \ni: %d str[i]: %s",i,str[i]);
 				
 				/*if(i==0)
 				{	
-					//System.outprintln("\n 1Âº posiÃ§Ã£o vazia");
+					//System.outprintln("\n 1º posição vazia");
 					
 					return 0;
 				}	
 				else 
 				{
 				*/	
-					////System.outprintln("\nposiÃ§Ã£o diferente 1Âº vazia");
+					////System.outprintln("\nposição diferente 1º vazia");
 					return i;
 				//}	
 			}
@@ -93,20 +165,25 @@ public synchronized int checkPrimeiraPosicoesVazia(String[] str){               
 		
 		//System.outprintln("vetor totalmente cheio");
 		
-		return -1; // se vetor pendentes cheio
+		return -1; // se vetor  cheio
 		
 	}
 	
 	//faz um shiftLeft do vetor.....
-public void shiftEsquerdaVetor(int posicao, String[] str/*, int tamanho*/){	//recebe a posicao do elemento removido
+public synchronized void shiftEsquerdaVetor(int posicao, String[] str/*, int tamanho*/){	//recebe a posicao do elemento removido
 
 	int i=0;
 	//System.outprintf("\nchegou a shift left");
 	int tamanho=checkPrimeiraPosicoesVazia(str);
 	
 	if(tamanho==-1){
-		tamanho=str.length;
-	}
+		if(str.length==15){
+			tamanho=15;
+		}
+		else if(str.length==7){
+			tamanho=7;
+		}
+	}	
 	
 	//System.outprintf("\nregressou shift esquerda");
 	
@@ -114,18 +191,18 @@ public void shiftEsquerdaVetor(int posicao, String[] str/*, int tamanho*/){	//re
 	//System.outprintf("\nvalor do tamnaho %d", tamanho);
 	
 	i=posicao;
-	//System.outprintf("\nvalor da posiÃ§Ã£o %d", posicao);
+	//System.outprintf("\nvalor da posição %d", posicao);
 	//System.outprintf("\nvalor de i %d", i);
 	
 		while(i<=tamanho){
 			//System.outprintf("\n entrou left");
-			if(i==(tamanho)){ // nÃ£o dava para fazer dentro para ultima posiÃ§Ã£o
+			if(i==(tamanho)){ // não dava para fazer dentro para ultima posição
 				//System.outprintln("\nentrou if");
 				str[i]="";
 				//System.outprintln("valor str");
 				//System.outprintln(str[i]);
 			}
-			else if(i!=(tamanho)){
+			if(i!=(tamanho)){
 				//System.outprintf("\n entrou else left");
 				//System.outprintln("\nvalor str");
 				str[i]=str[i+1];
@@ -137,8 +214,8 @@ public void shiftEsquerdaVetor(int posicao, String[] str/*, int tamanho*/){	//re
 		}
 	}
 	
-	//passa o elemento que nÃ£o pode executar para o fim do vetor
-public void reordenaVetor(int posicao, String[] str/*, int tamanho*/){ // quando um pedido nÃ£o pode ser realizado passa para o fim da fila
+	//passa o elemento que não pode executar para o fim do vetor
+public void reordenaVetor(int posicao, String[] str/*, int tamanho*/){ // quando um pedido não pode ser realizado passa para o fim da fila
 		
 		//System.outprintf("\nchegou reordena vetor");
 		String aux;
@@ -149,24 +226,24 @@ public void reordenaVetor(int posicao, String[] str/*, int tamanho*/){ // quando
 		
 		shiftEsquerdaVetor(posicao, str /*, tamanho*/);
 		//System.outprintf("\n voltou de shift esquerda");
-		finalOndeInserir=checkPrimeiraPosicoesVazia(str); //para inserir na primeira posiÃ§Ã£o vazia que encontrar
+		finalOndeInserir=checkPrimeiraPosicoesVazia(str); //para inserir na primeira posição vazia que encontrar
 		//System.outprintf("\n onde isnerir %d",finalOndeInserir);
 		str[finalOndeInserir]=aux;
-		//System.outprintf("\n posiÃ§Ã£o onde inserido");
+		//System.outprintf("\n posição onde inserido");
 		//System.outprintf(str[finalOndeInserir]);
 		
 	}
 	
-	//remover pedido, aplica-se apenas aos em pendente para quando passam para em execuÃ§Ã£o
-	// e para os em execuÃ§Ã£o quando passam a acabados
-public void removePedido(int posicao, String[] str){
+	//remover pedido, aplica-se apenas aos em pendente para quando passam para em execução
+	// e para os em execução quando passam a acabados
+public synchronized void removePedido(int posicao, String[] str){
 		
 		//System.outprintf("\n Chegou remove pedido: %s", str[posicao]);
 		
-		/*str[posicao]=null; // apaga o que estava lÃ¡ escrito
+		/*str[posicao]=null; // apaga o que estava lá escrito
 		//System.outprintf("\n valor str[posicao]");
 		//System.outprintf(str[posicao]);
-		//System.outprintf("\n valor naquela posiÃ§Ã£o que a remover");
+		//System.outprintf("\n valor naquela posição que a remover");
 		*/
 		
 		//System.outprintf("\n vai para shift left");
@@ -177,60 +254,76 @@ public void removePedido(int posicao, String[] str){
 		
 	}
 	
-	// normalmente para procurar a posiÃ§Ã£o do elemento que terminou, que estÃ¡ no vetor dos elementos em execuÃ§Ã£o
-public int procuraPosicao(int NO, String[] nomeVetor/*, int tamanho*/){
+	// normalmente para procurar a posição do elemento que terminou, que está no vetor dos elementos em execução
+public synchronized int procuraPosicao(int NO, String[] nomeVetor/*, int tamanho*/){
 		
-		//System.outprintf("\n chegou procura posiÃ§Ã£o");
+		//System.outprintf("\n chegou procura posição");
 		
 		String str = Integer.toString(NO); // converte string para inteiro
 		
-		//System.outprintf("\n valor da string str (NO)%s:", str);
+		System.out.printf("\n valor da string str (NO)%s:", str);
 		
 		
 		int tamanho=checkPrimeiraPosicoesVazia(nomeVetor);
-		//System.outprintf("\nvalor posiÃ§Ã£o livre %d", tamanho);
+		//System.outprintf("\nvalor posição livre %d", tamanho);
 		
 		if(tamanho==-1){
 			tamanho=nomeVetor.length;
-		}
+			/*
+			if(nomeVetor.length==15){
+				tamanho=15;
+			}
+			else if(nomeVetor.length==7){
+				tamanho=7;
+			}*/
+		}	
+			
 		int i;
 		
 		tamanho=tamanho-1;
-		//System.outprintf("\nvalor tamanho %d", tamanho);
+		System.out.printf("\nvalor tamanho %d", tamanho);
 		
 		for(i=0; i<=(tamanho); i++){
 			
 			//System.outprintf("\n entrou for");
-			
-			if(nomeVetor[i].contains(str)){ //quando encontrar o elemento do qual se quer saber a posiÃ§Ã£o
+			System.out.printf("\nvalor do i: %d", i);
+			if(nomeVetor[i].contains(str)){ //quando encontrar o elemento do qual se quer saber a posição
 				//System.outprintf("\n valor supostamente igual %s",nomeVetor[i]);
-				//System.outprintf("\nvalor do i: %d", i);
-				return i; //retorna a posiÃ§Ã£o do elemento no vetor
+				System.out.printf("\nvalor do i: %d", i);
+				return i; //retorna a posição do elemento no vetor
 			}
 		}	
-		return -1; // quando nÃ£o encontra elemento
+		return -1; // quando não encontra elemento
 	}
 
 // Mandar para inteface o pedido acabado
 public synchronized void SinalPedidoAcabado(int NO){ //synchronized para so uma thread por fazer isto de cada vez
 	
 	int posicao=procuraPosicao(NO, pedidosEmExecucao/*, 6*/); //procura posicao elemento 
-	System.out.println("\nPosição" +posicao);
-	System.out.println("\nNumero de ordem" +NO);
 	String auxiliar=pedidosEmExecucao[posicao];
 	//mandar para interface
 	//System.outprintf("\nManda para interface %s",pedidosEmExecucao[posicao]);
-	Interface grafica=Interface.getInstance();//vai buscar objecto Interface
-	grafica.adicionaPedidoAcabado(auxiliar);
+	
+	//DEPOIS SE DER MAL DESCOMENTAR ISTO <+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//Interface grafica=Interface.getInstance();//vai buscar objecto Interface
+	//grafica.adicionaPedidoAcabado(auxiliar);
+	
+	
 	removePedido(posicao, pedidosEmExecucao);
+	
+	
+//****************************************************************************************************************************************************************	
+	mandaInterface(posicao,auxiliar,2);//mandar pedido acabado e remove também
+//****************************************************************************************************************************************************************	
+	
 }
 
 	
-// Para criar novo pedido em execuÃ§Ã£o
+// Para criar novo pedido em execução
 public boolean inserePedidosEmExecucao(String pedido){
 		
-	//System.outprintln("\nchegou vetor pedidos em execuÃ§Ã£o");
-	//String ss=String.format("valor aux %s na iteraÃ§Ã£o", pedido);
+	//System.outprintln("\nchegou vetor pedidos em execução");
+	//String ss=String.format("valor aux %s na iteração", pedido);
 	//System.outprintln(ss);
 	
 	
@@ -238,117 +331,135 @@ public boolean inserePedidosEmExecucao(String pedido){
 		if(i==-1){
 			
 			//System.outprintln("Vetor pedidos pendentes cheios");
-			return false; // vetor espera jÃ¡ cheio, logo fazer pedido
+			return false; // vetor espera já cheio, logo fazer pedido
 			
 		}
 		
 		else{
 			
-			//System.outprintf("\n entrou 1Âº else pedidos Em ExecuÃ§Ã£o");
+			//System.outprintf("\n entrou 1º else pedidos Em Execução");
 			
-			char[] aux = pedido.toCharArray(); // copia a string para um vetor de char's para ser mais fÃ¡cil aceder a cada caracter
+			char[] aux = pedido.toCharArray(); // copia a string para um vetor de char's para ser mais fácil aceder a cada caracter
 			//int j=0, posicao;
 			//System.outprintln("\nvalor do vetor de char");
 			//System.outprintln(aux);
 			
 			
-			if(aux[1]=='T'){  // Trata-se de uma transformaÃ§Ã£o, e aux[0] Ã© :
+			if(aux[1]=='T'){  // Trata-se de uma transformação, e aux[0] é :
 				
 				int j=0, posicao;
-				//System.outprintln("\ntrata-se transformaÃ§Ã£o");
+				//System.outprintln("\ntrata-se transformação");
 				//System.outprintln(aux[1]);
 				
 				
 				String s = new StringBuilder().append(aux[7]).append(aux[8]).toString(); //junta a quantidade numa string
-				int n = Integer.parseInt(s.toString()); //converte para inteiro para criar tantos transforma quantas transformaÃ§Ãµes deste tipo
-				//System.outprintf("\nvalor da quantidade Ã© %d:", n);
+				int n = Integer.parseInt(s.toString()); //converte para inteiro para criar tantos transforma quantas transformações deste tipo
+				//System.outprintf("\nvalor da quantidade é %d:", n);
 				
 				int caminho, contadorTransformasFeitosDaqueleTipo=0;
 				
 				while(j<n){
-					String str = new StringBuilder().append(aux[2]).append(aux[3]).append(aux[4]).toString(); // junta o nÂº ordem numa string
+					String str = new StringBuilder().append(aux[2]).append(aux[3]).append(aux[4]).toString(); // junta o nº ordem numa string
 					int auxiliar= Integer.parseInt(str.toString()); // coverter para inteiro, pois o que recebe transforma
 					
-					//System.outprintf("\n NO Ã© %d:", auxiliar);
+					//System.outprintf("\n NO é %d:", auxiliar);
 					int auxiliar2 = Character.getNumericValue(aux[5]); //converter char para inteiro
-					//System.outprintf("\n PeÃ§aOrigem Ã© %d:", auxiliar2);
+					//System.outprintf("\n PeçaOrigem é %d:", auxiliar2);
 					int auxiliar3 = Character.getNumericValue(aux[6]);
-					//System.outprintf("\n PeÃ§aFinal Ã© %d:", auxiliar3);
+					//System.outprintf("\n PeçaFinal é %d:", auxiliar3);
 					
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-					caminho=Caminho.EscolheNovoCaminho('T', auxiliar2, auxiliar3, 0); // 0 , pois nÃ£o se especifica destino
+					caminho=Caminho.EscolheNovoCaminho('T', auxiliar2, auxiliar3, 0); // 0 , pois não se especifica destino
 					
 					//System.outprintf("\nvalor de caminho %d", caminho);
-					//if(j!=0) caminho=0; //DEPOIS TIRAR, SÃ“ PARA TESTE
+					//if(j!=0) caminho=0; //DEPOIS TIRAR, SÓ PARA TESTE
 					
-					if( caminho>=0){ // se transforma conseguir ter caminho atribuido entÃ£o fazer:
+					if( caminho>=0){ // se transforma conseguir ter caminho atribuido então fazer:
 						
 						//System.outprintf("\n Entrou if");
-						//System.outprintf("\n o caminho Ã© %d:", caminho);
+						//System.outprintf("\n o caminho é %d:", caminho);
 						contadorTransformasFeitosDaqueleTipo++;
 						// criar objecto tipo transforma
 						Thread T=new Thread (new Transforma(auxiliar,auxiliar2,auxiliar3,caminho));
 						//adiciona-lo ao ArrayList de threads
 						transformacoes_threads.add(T);
-						//adiciona ao ArrayList de numeros para saber qual o pedido em cada posiÃ§Ã£o do vetor de threads
-						//ou seja na 1Âº posiÃ§ao transformacoes_threads_elementos tem o NO da primeira thread para transformaÃ§Ãµes 
+						//adiciona ao ArrayList de numeros para saber qual o pedido em cada posição do vetor de threads
+						//ou seja na 1º posiçao transformacoes_threads_elementos tem o NO da primeira thread para transformações 
 						transformacoes_threads_elementos.add(auxiliar);
 						// pois como insere um de cada vez, apesar n diferente de 1, acho que vale a pena por apenas com n=1
 						String numTransformacao = "01";
 						String unicaTransformacaoTemp = new StringBuilder().append(aux[0]).append(aux[1]).append(aux[2]).append(aux[3]).append(aux[4]).append(aux[5]).append(aux[6]).toString();
 						String pedidoNumCorreto = unicaTransformacaoTemp + numTransformacao;
 						
-						//caso nÃ£o se queira meter quandidade 1 em cada que se faÃ§a
+						//caso não se queira meter quandidade 1 em cada que se faça
 						//pedidosEmExecucao[i]=pedido;
 						i=checkPrimeiraPosicoesVazia(pedidosEmExecucao);
-						pedidosEmExecucao[i]= pedidoNumCorreto; //insere a ultima ordem recebida na 1Âº posiÃ§ao livre do vetor em execuÃ§Ã£o
+						pedidosEmExecucao[i]= pedidoNumCorreto; //insere a ultima ordem recebida na 1º posiçao livre do vetor em execução
 						//System.outprintf("\n valor pedido inserido: %s", pedidosEmExecucao[i]);
 						//System.outprintf("\nvalor de j %d", j);
-						if(j==(n-1)){ // pois quando insere todos em execuÃ§Ã£o apaga de pendentes
+						
+						
+//*********************************************************************************************************************************************************************************************						
+						mandaInterface(0,pedidoNumCorreto,1);//acresentar pedido em execução interface
+//*********************************************************************************************************************************************************************************************
+						
+						
+						if(j==(n-1)){ // pois quando insere todos em execução apaga de pendentes
 							
 							//System.outprintf("\n entrou j=n-1");
 							posicao=procuraPosicao(auxiliar, vetorPedidosPendentes/*, 15*/); //procura elemento pelo valor NO
-							//System.outprintf("\n voltou de procura posiÃ§Ã£o");
-							//System.outprintf("\n valor posiÃ§Ã£o %d", posicao);
-							////System.outprintf("\n valor na posiÃ§Ã£o %s", vetorPedidosPendentes[posicao]);
-							//if(posicao==-1) //System.outprintln("NÃ£o existe esse elemento");
-							removePedido(posicao, vetorPedidosPendentes); // sÃ³ remove pedido do vetorPedidosPendentes se for so uma transforma deste tipo	
+							//System.outprintf("\n voltou de procura posição");
+							//System.outprintf("\n valor posição %d", posicao);
+							////System.outprintf("\n valor na posição %s", vetorPedidosPendentes[posicao]);
+							//if(posicao==-1) //System.outprintln("Não existe esse elemento");
+							removePedido(posicao, vetorPedidosPendentes); // só remove pedido do vetorPedidosPendentes se for so uma transforma deste tipo	
 							//System.outprintln("\nvalor pedidos pendentes");
 							//System.outprintln(vetorPedidosPendentes[posicao]);
-							//System.outprintln("\nvalor pedidos em execuÃ§Ã£o");
+							//System.outprintln("\nvalor pedidos em execução");
 							//System.outprintln(pedidosEmExecucao[i]);
+							
+//*******************************************************************************************************************************************************************************************							
+							mandaInterface(posicao, null, 3); //remove pedido pendente passado a execução da interface
+//********************************************************************************************************************************************************************************************							
+							
 						}
 						//arrancar  a thread
 						T.start();	
 					}
 					
-					else{ // se transforma nÃ£o conseguir ter caminho atribuido entÃ£o fazer:
+					else{ // se transforma não conseguir ter caminho atribuido então fazer:
 						
-						if(n==1){ //se sÃ³ um transforma deste tipo e nÃ£o tiver caminho
+						if(n==1){ //se só um transforma deste tipo e não tiver caminho
 							
 							//System.outprintf("\n else if n==1");
-							//System.outprintf("\n valor de n Ã© %d:", n);
+							//System.outprintf("\n valor de n é %d:", n);
 							posicao=procuraPosicao(auxiliar, vetorPedidosPendentes/*, 15*/); //procura elemento pelo valor NO
-							//System.outprintf("regressou pedidosEmExecuÃ§Ã£o");
-							//System.outprintf("\n valor posiÃ§Ã£o %d", posicao);
-							//System.outprintf("\n valor na posiÃ§Ã£o %s", vetorPedidosPendentes[posicao]);
-							//if(posicao==-1) //System.outprintln("NÃ£o existe esse elemento");
+							//System.outprintf("regressou pedidosEmExecução");
+							//System.outprintf("\n valor posição %d", posicao);
+							//System.outprintf("\n valor na posição %s", vetorPedidosPendentes[posicao]);
+							//if(posicao==-1) //System.outprintln("Não existe esse elemento");
 							reordenaVetor(posicao, vetorPedidosPendentes/*, 15*/); //passar pedido para final do vetor pedidosPendentes
 							//System.outprintf("\nvoltou do reordena");
-							//System.outprintf("\n valor do contador ciclo Ã© %d:", j);
+							//System.outprintf("\n valor do contador ciclo é %d:", j);
+							
+							
+//***************************************************************************************************************************************************************************************							
+							mandaInterface(posicao,null,5); //reordena vetor pedidos pendentes da interface
+//***********************************************************************************************************************************************************************************
+							
 							
 							return false;
 						}
 						else{ 
 							
 							//System.outprintf("\n entrou else if com n diferente 1");
-							//System.outprintf("\n valor de n Ã© %d:", n);
-							//mais do que um transforma do mesmo tipo, mas nÃ£o consegui criar todos
+							//System.outprintf("\n valor de n é %d:", n);
+							//mais do que um transforma do mesmo tipo, mas não consegui criar todos
 							//atualiza a quantidade que tem de fazer
 							posicao=procuraPosicao(auxiliar, vetorPedidosPendentes/*, 15*/); //procura elemneto pelo valor NO
-							//System.outprintf("\n valor posiÃ§Ã£o %d", posicao);
-							//System.outprintf("\n valor na posiÃ§Ã£o %s", vetorPedidosPendentes[posicao]);
-							//if(posicao==-1) //System.outprintln("NÃ£o existe esse elemento");
+							//System.outprintf("\n valor posição %d", posicao);
+							//System.outprintf("\n valor na posição %s", vetorPedidosPendentes[posicao]);
+							//if(posicao==-1) //System.outprintln("Não existe esse elemento");
 							int novaQuantidade=n-contadorTransformasFeitosDaqueleTipo;
 							//System.outprintf("\n valor quantidade %d", novaQuantidade);
 							String temp = String.valueOf(novaQuantidade); //novo valor para a quantdade a inserir
@@ -356,13 +467,13 @@ public boolean inserePedidosEmExecucao(String pedido){
 							//System.outprintf(temp);
 							//System.outprintln("\ntamanho string quantidade");
 							//System.outprintln(temp.length());
-							if(temp.length()==1){ // pois caso numero transforma nÃ£o atinja dezenas tenho de por zero antes
+							if(temp.length()==1){ // pois caso numero transforma não atinja dezenas tenho de por zero antes
 								String temp2 = '0'+ temp;
 								//System.outprintln("\nstring temp");
 								//System.outprintln(temp2);
 								temp=temp2;
 							}
-							//vai buscar todos os outros chars que se mantÃªm
+							//vai buscar todos os outros chars que se mantêm
 							String pedidoAlteradoTemp = new StringBuilder().append(aux[0]).append(aux[1]).append(aux[2]).append(aux[3]).append(aux[4]).append(aux[5]).append(aux[6]).toString();
 							//System.outprintf("\n valor string pedidoAlteradoTemp");
 							//System.outprintf(pedidoAlteradoTemp);
@@ -374,9 +485,14 @@ public boolean inserePedidosEmExecucao(String pedido){
 							vetorPedidosPendentes[posicao]=pedidoAlteradoDefinitivo;
 							//System.outprintf("\n novo valor pedido atualizado/alterado");
 							//System.outprintf(vetorPedidosPendentes[posicao]);
-							//para assim meter no final da fila o pedido que nÃ£o consegui executar
+							//para assim meter no final da fila o pedido que não consegui executar
 							reordenaVetor(posicao, vetorPedidosPendentes);
-							//System.outprintf("\n valor do contador ciclo Ã© %d:", j);
+							//System.outprintf("\n valor do contador ciclo é %d:", j);
+							
+							
+//******************************************************************************************************************************************************************************************							
+							mandaInterface(posicao,pedidoAlteradoDefinitivo,100);
+//***************************************************************************************************************************************************************************************							
 							
 							return false;
 						}
@@ -386,7 +502,7 @@ public boolean inserePedidosEmExecucao(String pedido){
 					j++;//para criar tantos pedidos transforma deste tipo quantos indicados
 					
 				}
-				//System.outprintf("\n valor do contador ciclo Ã© %d:", j);
+				//System.outprintf("\n valor do contador ciclo é %d:", j);
 				//System.outprintf("\nvalores pedidos pendentes");
 				return true;
 			}	
@@ -399,78 +515,99 @@ public boolean inserePedidosEmExecucao(String pedido){
 				
 				String s = new StringBuilder().append(aux[7]).append(aux[8]).toString(); //junta a quantidade numa string
 				int n = Integer.parseInt(s.toString()); //converte para inteiro para criar tantos Montagem quantas Montagem deste tipo
-				//System.outprintf("\nvalor da quantidade Ã© %d:", n);
+				//System.outprintf("\nvalor da quantidade é %d:", n);
 				
 				int caminho, contadorMontagemFeitosDaqueleTipo=0;
 				
 				while(j<n){
-					String str = new StringBuilder().append(aux[2]).append(aux[3]).append(aux[4]).toString(); // junta o nÂº ordem numa string
+					String str = new StringBuilder().append(aux[2]).append(aux[3]).append(aux[4]).toString(); // junta o nº ordem numa string
 					int auxiliar= Integer.parseInt(str.toString()); // coverter para inteiro, pois o que recebe Montagem
 					
-					//System.outprintf("\n NO Ã© %d:", auxiliar);
+					//System.outprintf("\n NO é %d:", auxiliar);
 					int auxiliar2 = Character.getNumericValue(aux[5]); //converter char para inteiro
-					//System.outprintf("\n PeÃ§aBaixo Ã© %d:", auxiliar2);
+					//System.outprintf("\n PeçaBaixo é %d:", auxiliar2);
 					int auxiliar3 = Character.getNumericValue(aux[6]);
-					//System.outprintf("\n PeÃ§aCima Ã© %d:", auxiliar3);
+					//System.outprintf("\n PeçaCima é %d:", auxiliar3);
 					
 					EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-					caminho=Caminho.EscolheNovoCaminho('M', auxiliar2, auxiliar3, 0); // 0 , pois nÃ£o se especifica destino
+					caminho=Caminho.EscolheNovoCaminho('M', auxiliar2, auxiliar3, 0); // 0 , pois não se especifica destino
 					
 					//System.outprintf("\nvalor de caminho %d", caminho);
-					if( caminho>=0){ // se montagem conseguir ter caminho atribuido entÃ£o fazer:
+					if( caminho>=0){ // se montagem conseguir ter caminho atribuido então fazer:
 						
 						//System.outprintf("\n Entrou if");
-						//System.outprintf("\n o caminho Ã© %d:", caminho);
+						//System.outprintf("\n o caminho é %d:", caminho);
 						contadorMontagemFeitosDaqueleTipo++;
 						// criar objecto tipo montagem
 						Thread T=new Thread (new Montagem(auxiliar,auxiliar2,auxiliar3));
 						//adiciona-lo ao ArrayList de threads
 						montagens_threads.add(T);
-						//adiciona ao ArrayList de numeros para saber qual o pedido em cada posiÃ§Ã£o do vetor de threads
-						//ou seja na 1Âº posiÃ§ao montagem_threads_elementos tem o NO da primeira thread para montagens 
+						//adiciona ao ArrayList de numeros para saber qual o pedido em cada posição do vetor de threads
+						//ou seja na 1º posiçao montagem_threads_elementos tem o NO da primeira thread para montagens 
 						montagens_threads_elementos.add(auxiliar);
 						// pois como insere um de cada vez, apesar n diferente de 1, acho que vale a pena por apenas com n=1
 						String numMontagem = "01";
 						String unicaMontagemTemp = new StringBuilder().append(aux[0]).append(aux[1]).append(aux[2]).append(aux[3]).append(aux[4]).append(aux[5]).append(aux[6]).toString();
 						String pedidoNumCorreto = unicaMontagemTemp + numMontagem;
 						
-						//caso nÃ£o se queira meter quandidade 1 em cada que se faÃ§a
+						//caso não se queira meter quandidade 1 em cada que se faça
 						//pedidosEmExecucao[i]=pedido;
 						i=checkPrimeiraPosicoesVazia(pedidosEmExecucao);
-						pedidosEmExecucao[i]= pedidoNumCorreto; //insere a ultima ordem recebida na 1Âº posiÃ§ao livre do vetor em execuÃ§Ã£o
+						pedidosEmExecucao[i]= pedidoNumCorreto; //insere a ultima ordem recebida na 1º posiçao livre do vetor em execução
 						//System.outprintf("\n valor pedido inserido");
 						//System.outprintf(pedidosEmExecucao[i]);
-						if(j==(n-1)){ // pois quando insere todos em execuÃ§Ã£o apaga de pendentes
+						
+						
+//*********************************************************************************************************************************************************************************************						
+						mandaInterface(0,pedidoNumCorreto,1);//acresentar pedido em execução interface
+//*********************************************************************************************************************************************************************************************
+						
+	
+						if(j==(n-1)){ // pois quando insere todos em execução apaga de pendentes
 							
 							//System.outprintf("\n entrou j=n-1");
 							posicao=procuraPosicao(auxiliar, vetorPedidosPendentes/*, 15*/); //procura elemento pelo valor NO
-							//System.outprintf("\n voltou de procura posiÃ§Ã£o");
-							//System.outprintf("\n valor posiÃ§Ã£o %d", posicao);
-							////System.outprintf("\n valor na posiÃ§Ã£o %s", vetorPedidosPendentes[posicao]);
-							//if(posicao==-1) //System.outprintln("NÃ£o existe esse elemento");
-							removePedido(posicao, vetorPedidosPendentes); // sÃ³ remove pedido do vetorPedidosPendentes se for so uma montagem deste tipo	
+							//System.outprintf("\n voltou de procura posição");
+							//System.outprintf("\n valor posição %d", posicao);
+							////System.outprintf("\n valor na posição %s", vetorPedidosPendentes[posicao]);
+							//if(posicao==-1) //System.outprintln("Não existe esse elemento");
+							removePedido(posicao, vetorPedidosPendentes); // só remove pedido do vetorPedidosPendentes se for so uma montagem deste tipo	
 							//System.outprintln("\nvalor pedidos pendentes");
 							//System.outprintln(vetorPedidosPendentes[posicao]);
-							//System.outprintln("\nvalor pedidos em execuÃ§Ã£o");
+							//System.outprintln("\nvalor pedidos em execução");
 							//System.outprintln(pedidosEmExecucao[i]);
+													
+							
+//*******************************************************************************************************************************************************************************************							
+							mandaInterface(posicao, null, 3); //remove pedido pendente passado a execução da interface
+//********************************************************************************************************************************************************************************************														
+							
+														
 						}
+						
 						//arrancar  a thread
 						T.start();	
 					}
-					else{ // se montagem nÃ£o conseguir ter caminho atribuido entÃ£o fazer:
+					else{ // se montagem não conseguir ter caminho atribuido então fazer:
 						
-						if(n==1){ //se sÃ³ um montagem deste tipo e nÃ£o tiver caminho
+						if(n==1){ //se só um montagem deste tipo e não tiver caminho
 							
 							//System.outprintf("\n else if n==1");
-							//System.outprintf("\n valor de n Ã© %d:", n);
+							//System.outprintf("\n valor de n é %d:", n);
 							posicao=procuraPosicao(auxiliar, vetorPedidosPendentes/*, 15*/); //procura elemento pelo valor NO
-							//System.outprintf("\nregressou pedidosEmExecuÃ§Ã£o");
-							//System.outprintf("\n valor posiÃ§Ã£o %d", posicao);
-							//System.outprintf("\n valor na posiÃ§Ã£o %s", vetorPedidosPendentes[posicao]);
-							//if(posicao==-1) //System.outprintln("NÃ£o existe esse elemento");
+							//System.outprintf("\nregressou pedidosEmExecução");
+							//System.outprintf("\n valor posição %d", posicao);
+							//System.outprintf("\n valor na posição %s", vetorPedidosPendentes[posicao]);
+							//if(posicao==-1) //System.outprintln("Não existe esse elemento");
 							reordenaVetor(posicao, vetorPedidosPendentes/*, 15*/); //passar pedido para final do vetor pedidosPendentes
 							//System.outprintf("\nvoltou do reordena");
-							//System.outprintf("\n valor do contador ciclo Ã© %d:", j);
+							//System.outprintf("\n valor do contador ciclo é %d:", j);
+							
+		
+//***************************************************************************************************************************************************************************************							
+							mandaInterface(posicao,null,5); //reordena vetor pedidos pendentes da interface
+//***********************************************************************************************************************************************************************************
+														
 							
 							return false;
 						}
@@ -478,13 +615,13 @@ public boolean inserePedidosEmExecucao(String pedido){
 						else{ //
 							
 							//System.outprintf("\n entrou else if com n diferente 1");
-							//System.outprintf("\n valor de n Ã© %d:", n);
-							//mais do que um montagem do mesmo tipo, mas nÃ£o consegui criar todos
+							//System.outprintf("\n valor de n é %d:", n);
+							//mais do que um montagem do mesmo tipo, mas não consegui criar todos
 							//atualiza a quantidade que tem de fazer
 							posicao=procuraPosicao(auxiliar, vetorPedidosPendentes/*, 15*/); //procura elemneto pelo valor NO
-							//System.outprintf("\n valor posiÃ§Ã£o %d", posicao);
-							//System.outprintf("\n valor na posiÃ§Ã£o %s", vetorPedidosPendentes[posicao]);
-							//if(posicao==-1) //System.outprintln("NÃ£o existe esse elemento");
+							//System.outprintf("\n valor posição %d", posicao);
+							//System.outprintf("\n valor na posição %s", vetorPedidosPendentes[posicao]);
+							//if(posicao==-1) //System.outprintln("Não existe esse elemento");
 							int novaQuantidade=n-contadorMontagemFeitosDaqueleTipo;
 							//System.outprintf("\n valor quantidade %d", novaQuantidade);
 							String temp = String.valueOf(novaQuantidade); //novo valor para a quantdade a inserir
@@ -492,13 +629,13 @@ public boolean inserePedidosEmExecucao(String pedido){
 							//System.outprintf(temp);
 							//System.outprintln("\ntamanho string quantidade");
 							//System.outprintln(temp.length());
-							if(temp.length()==1){ // pois caso numero montagem nÃ£o atinja dezenas tenho de por zero antes
+							if(temp.length()==1){ // pois caso numero montagem não atinja dezenas tenho de por zero antes
 								String temp2 = '0'+ temp;
 								//System.outprintln("\nstring temp");
 								//System.outprintln(temp2);
 								temp=temp2;
 							}
-							//vai buscar todos os outros chars que se mantÃªm
+							//vai buscar todos os outros chars que se mantêm
 							String pedidoAlteradoTemp = new StringBuilder().append(aux[0]).append(aux[1]).append(aux[2]).append(aux[3]).append(aux[4]).append(aux[5]).append(aux[6]).toString();
 							//System.outprintf("\n valor string pedidoAlteradoTemp");
 							//System.outprintf(pedidoAlteradoTemp);
@@ -510,15 +647,23 @@ public boolean inserePedidosEmExecucao(String pedido){
 							vetorPedidosPendentes[posicao]=pedidoAlteradoDefinitivo;
 							//System.outprintf("\n novo valor pedido atualizado/alterado");
 							//System.outprintf(vetorPedidosPendentes[posicao]);
-							//para assim meter no final da fila o pedido que nÃ£o consegui executar
+							//para assim meter no final da fila o pedido que não consegui executar
 							reordenaVetor(posicao, vetorPedidosPendentes);
-							//System.outprintf("\n valor do contador ciclo Ã© %d:", j);
+							//System.outprintf("\n valor do contador ciclo é %d:", j);
+							
+							
+//******************************************************************************************************************************************************************************************							
+							mandaInterface(posicao,pedidoAlteradoDefinitivo,100);
+//***************************************************************************************************************************************************************************************							
+							
+							
+							
 							return false;
 						}
 					
 				    }
 					j++;//para criar tantos pedidos transforma deste tipo quantos indicados
-					//System.outprintf("\n valor do contador ciclo Ã© %d:", j);
+					//System.outprintf("\n valor do contador ciclo é %d:", j);
 					//System.outprintf("\nvalores pedidos pendentes");
 					
 			}
@@ -532,78 +677,103 @@ public boolean inserePedidosEmExecucao(String pedido){
 			
 			String s = new StringBuilder().append(aux[7]).append(aux[8]).toString(); //junta a quantidade numa string
 			int n = Integer.parseInt(s.toString()); //converte para inteiro para criar tantos Montagem quantas Montagem deste tipo
-			//System.outprintf("\nvalor da quantidade Ã© %d:", n);
+			//System.outprintf("\nvalor da quantidade é %d:", n);
 			
 			int caminho, contadorDescargaFeitosDaqueleTipo=0;
 			
 			while(j<n){
-				String str = new StringBuilder().append(aux[2]).append(aux[3]).append(aux[4]).toString(); // junta o nÂº ordem numa string
+				String str = new StringBuilder().append(aux[2]).append(aux[3]).append(aux[4]).toString(); // junta o nº ordem numa string
 				int auxiliar= Integer.parseInt(str.toString()); // coverter para inteiro, pois o que recebe Descarga
 				
-				//System.outprintf("\n NO Ã© %d:", auxiliar);
+				//System.outprintf("\n NO é %d:", auxiliar);
 				int auxiliar2 = Character.getNumericValue(aux[5]); //converter char para inteiro
-				//System.outprintf("\n PeÃ§aBaixo Ã© %d:", auxiliar2);
+				//System.outprintf("\n PeçaBaixo é %d:", auxiliar2);
 				int auxiliar3 = Character.getNumericValue(aux[6]);
-				//System.outprintf("\n Destino Ã© %d:", auxiliar3);
+				//System.outprintf("\n Destino é %d:", auxiliar3);
 				
 				EscolheCaminho Caminho=EscolheCaminho.getInstance();//vai buscar objecto Caminho
-				caminho=Caminho.EscolheNovoCaminho('U', auxiliar2, 0 ,auxiliar3); // 0 , pois nÃ£o se especifica PeÃ§a destino
+				caminho=Caminho.EscolheNovoCaminho('U', auxiliar2, 0 ,auxiliar3); // 0 , pois não se especifica Peça destino
 				
 				//System.outprintf("\nvalor de caminho %d", caminho);
-				if( caminho>=0){ // se montagem conseguir ter caminho atribuido entÃ£o fazer:
+				if( caminho>=0){ // se montagem conseguir ter caminho atribuido então fazer:
 					
 					//System.outprintf("\n Entrou if");
-					//System.outprintf("\n o caminho Ã© %d:", caminho);
+					//System.outprintf("\n o caminho é %d:", caminho);
 					contadorDescargaFeitosDaqueleTipo++;
 					// criar objecto tipo descarga
 					Thread T=new Thread (new Descarga(auxiliar,auxiliar2,auxiliar3, caminho));
 					//adiciona-lo ao ArrayList de threads
 					descargas_threads.add(T);
-					//adiciona ao ArrayList de numeros para saber qual o pedido em cada posiÃ§Ã£o do vetor de threads
-					//ou seja na 1Âº posiÃ§ao descarga_threads_elementos tem o NO da primeira thread para descargas 
+					//adiciona ao ArrayList de numeros para saber qual o pedido em cada posição do vetor de threads
+					//ou seja na 1º posiçao descarga_threads_elementos tem o NO da primeira thread para descargas 
 					descargas_threads_elementos.add(auxiliar);
 					// pois como insere um de cada vez, apesar n diferente de 1, acho que vale a pena por apenas com n=1
 					String numDescarga = "01";
 					String unicaDescargaTemp = new StringBuilder().append(aux[0]).append(aux[1]).append(aux[2]).append(aux[3]).append(aux[4]).append(aux[5]).append(aux[6]).toString();
 					String pedidoNumCorreto = unicaDescargaTemp + numDescarga;
 					
-					//caso nÃ£o se queira meter quandidade 1 em cada que se faÃ§a
+					//caso não se queira meter quandidade 1 em cada que se faça
 					//pedidosEmExecucao[i]=pedido;
 					i=checkPrimeiraPosicoesVazia(pedidosEmExecucao);
-					pedidosEmExecucao[i]= pedidoNumCorreto; //insere a ultima ordem recebida na 1Âº posiÃ§ao livre do vetor em execuÃ§Ã£o
+					pedidosEmExecucao[i]= pedidoNumCorreto; //insere a ultima ordem recebida na 1º posiçao livre do vetor em execução
 					//System.outprintf("\n valor pedido inserido");
 					//System.outprintf(pedidosEmExecucao[i]);
-					if(j==(n-1)){ // pois quando insere todos em execuÃ§Ã£o apaga de pendentes
+					
+					
+//*********************************************************************************************************************************************************************************************						
+					mandaInterface(0,pedidoNumCorreto,1);//acresentar pedido em execução interface
+//*********************************************************************************************************************************************************************************************
+					
+					
+					
+					if(j==(n-1)){ // pois quando insere todos em execução apaga de pendentes
 						
 						//System.outprintf("\n entrou j=n-1");
 						posicao=procuraPosicao(auxiliar, vetorPedidosPendentes/*, 15*/); //procura elemento pelo valor NO
-						//System.outprintf("\n voltou de procura posiÃ§Ã£o");
-						//System.outprintf("\n valor posiÃ§Ã£o %d", posicao);
-						////System.outprintf("\n valor na posiÃ§Ã£o %s", vetorPedidosPendentes[posicao]);
-						//if(posicao==-1) //System.outprintln("NÃ£o existe esse elemento");
-						removePedido(posicao, vetorPedidosPendentes); // sÃ³ remove pedido do vetorPedidosPendentes se for so uma montagem deste tipo	
+						//System.outprintf("\n voltou de procura posição");
+						//System.outprintf("\n valor posição %d", posicao);
+						////System.outprintf("\n valor na posição %s", vetorPedidosPendentes[posicao]);
+						//if(posicao==-1) //System.outprintln("Não existe esse elemento");
+						removePedido(posicao, vetorPedidosPendentes); // só remove pedido do vetorPedidosPendentes se for so uma montagem deste tipo	
 						//System.outprintln("\nvalor pedidos pendentes");
 						//System.outprintln(vetorPedidosPendentes[posicao]);
-						//System.outprintln("\nvalor pedidos em execuÃ§Ã£o");
+						//System.outprintln("\nvalor pedidos em execução");
 						//System.outprintln(pedidosEmExecucao[i]);
+						
+						
+						
+//*******************************************************************************************************************************************************************************************							
+						mandaInterface(posicao, null, 3); //remove pedido pendente passado a execução da interface
+//********************************************************************************************************************************************************************************************	
+						
+						
 					}
+					
 					//arrancar  a thread
 					T.start();	
-				}
-				else{ // se descarga nÃ£o conseguir ter caminho atribuido entÃ£o fazer:
 					
-					if(n==1){ //se sÃ³ um descarga deste tipo e nÃ£o tiver caminho
+				}
+				else{ // se descarga não conseguir ter caminho atribuido então fazer:
+					
+					if(n==1){ //se só um descarga deste tipo e não tiver caminho
 						
 						//System.outprintf("\n else if n==1");
-						//System.outprintf("\n valor de n Ã© %d:", n);
+						//System.outprintf("\n valor de n é %d:", n);
 						posicao=procuraPosicao(auxiliar, vetorPedidosPendentes/*, 15*/); //procura elemento pelo valor NO
-						//System.outprintf("regressou pedidosEmExecuÃ§Ã£o");
-						//System.outprintf("\n valor posiÃ§Ã£o %d", posicao);
-						//System.outprintf("\n valor na posiÃ§Ã£o %s", vetorPedidosPendentes[posicao]);
-						//if(posicao==-1) //System.outprintln("NÃ£o existe esse elemento");
+						//System.outprintf("regressou pedidosEmExecução");
+						//System.outprintf("\n valor posição %d", posicao);
+						//System.outprintf("\n valor na posição %s", vetorPedidosPendentes[posicao]);
+						//if(posicao==-1) //System.outprintln("Não existe esse elemento");
 						reordenaVetor(posicao, vetorPedidosPendentes/*, 15*/); //passar pedido para final do vetor pedidosPendentes
 						//System.outprintf("\nvoltou do reordena");
-						//System.outprintf("\n valor do contador ciclo Ã© %d:", j);
+						//System.outprintf("\n valor do contador ciclo é %d:", j);
+						
+						
+//***************************************************************************************************************************************************************************************							
+						mandaInterface(posicao,null,5); //reordena vetor pedidos pendentes da interface
+//***********************************************************************************************************************************************************************************
+						
+						
 						
 						return false;
 					}
@@ -611,13 +781,13 @@ public boolean inserePedidosEmExecucao(String pedido){
 					else{ //
 						
 						//System.outprintf("\n entrou else if com n diferente 1");
-						//System.outprintf("\n valor de n Ã© %d:", n);
-						//mais do que um descarga do mesmo tipo, mas nÃ£o consegui criar todos
+						//System.outprintf("\n valor de n é %d:", n);
+						//mais do que um descarga do mesmo tipo, mas não consegui criar todos
 						//atualiza a quantidade que tem de fazer
 						posicao=procuraPosicao(auxiliar, vetorPedidosPendentes/*, 15*/); //procura elemento pelo valor NO
-						//System.outprintf("\n valor posiÃ§Ã£o %d", posicao);
-						//System.outprintf("\n valor na posiÃ§Ã£o %s", vetorPedidosPendentes[posicao]);
-						//if(posicao==-1) //System.outprintln("NÃ£o existe esse elemento");
+						//System.outprintf("\n valor posição %d", posicao);
+						//System.outprintf("\n valor na posição %s", vetorPedidosPendentes[posicao]);
+						//if(posicao==-1) //System.outprintln("Não existe esse elemento");
 						int novaQuantidade=n-contadorDescargaFeitosDaqueleTipo;
 						//System.outprintf("\n valor quantidade %d", novaQuantidade);
 						String temp = String.valueOf(novaQuantidade); //novo valor para a quantidade a inserir
@@ -625,13 +795,13 @@ public boolean inserePedidosEmExecucao(String pedido){
 						//System.outprintf(temp);
 						//System.outprintln("\ntamanho string quantidade");
 						//System.outprintln(temp.length());
-						if(temp.length()==1){ // pois caso numero montagem nÃ£o atinja dezenas tenho de por zero antes
+						if(temp.length()==1){ // pois caso numero montagem não atinja dezenas tenho de por zero antes
 							String temp2 = '0'+ temp;
 							//System.outprintln("\nstring temp");
 							//System.outprintln(temp2);
 							temp=temp2;
 						}
-						//vai buscar todos os outros chars que se mantÃªm
+						//vai buscar todos os outros chars que se mantêm
 						String pedidoAlteradoTemp = new StringBuilder().append(aux[0]).append(aux[1]).append(aux[2]).append(aux[3]).append(aux[4]).append(aux[5]).append(aux[6]).toString();
 						//System.outprintf("\n valor string pedidoAlteradoTemp");
 						//System.outprintf(pedidoAlteradoTemp);
@@ -643,32 +813,38 @@ public boolean inserePedidosEmExecucao(String pedido){
 						vetorPedidosPendentes[posicao]=pedidoAlteradoDefinitivo;
 						//System.outprintf("\n novo valor pedido atualizado/alterado");
 						//System.outprintf(vetorPedidosPendentes[posicao]);
-						//para assim meter no final da fila o pedido que nÃ£o consegui executar
+						//para assim meter no final da fila o pedido que não consegui executar
 						reordenaVetor(posicao, vetorPedidosPendentes);
-						//System.outprintf("\n valor do contador ciclo Ã© %d:", j);
+						//System.outprintf("\n valor do contador ciclo é %d:", j);
+						
+						
+//******************************************************************************************************************************************************************************************							
+						mandaInterface(posicao,pedidoAlteradoDefinitivo,100);
+//***************************************************************************************************************************************************************************************							
+						
 						
 						return false;
 					}
 				
 			    }	
 				j++;//para criar tantos pedidos transforma deste tipo quantos indicados
-				//System.outprintf("\n valor do contador ciclo Ã© %d:", j);
+				//System.outprintf("\n valor do contador ciclo é %d:", j);
 				
 			}	
 			
 		 return true;
 		}
 	
-	//System.outprintln("ERRO, pedido para inserir nÃ£o Ã© Transforma, nem Montagem, nem Descarga");	
-	return false; // no caso de nÃ£o ser nem transformaÃ§Ã£o, nem montagem, nem descarga	
+	//System.outprintln("ERRO, pedido para inserir não é Transforma, nem Montagem, nem Descarga");	
+	return false; // no caso de não ser nem transformação, nem montagem, nem descarga	
 	}
 		
 
-}//pedido carga Ã© o plc que gere
+}//pedido carga é o plc que gere
 	
 	
-	//Correr uma vez para tentar passar todos os pedidos possivies de pendentes a execuÃ§Ã£o 
-	// e para passar todos os pedidos de em execuÃ§Ã£o para acabados, caso terminados 
+	//Correr uma vez para tentar passar todos os pedidos possivies de pendentes a execução 
+	// e para passar todos os pedidos de em execução para acabados, caso terminados 
 
 public void runCicle () throws InterruptedException{                                                 
 			
@@ -681,41 +857,41 @@ public void runCicle () throws InterruptedException{
 			//vetorPedidosPendentes[0]=":T0012002";
 			
 			int aux=checkPrimeiraPosicoesVazia(vetorPedidosPendentes); // ou pedidosEmExecucao
-			//aux valor da primeira posiÃ§Ã£o vazia
+			//aux valor da primeira posição vazia
 			
 			
 			//System.outprintln("\nvolta runCicle");
 			//System.outprintln("\nvalor aux " +aux);
 			
 			if(aux==0){ // vetor totalmente vazio
-				//System.outprintln("\nNÃ£o hÃ¡ pedidos pendentes");
-				return; //pode nÃ£o dar
+				//System.outprintln("\nNão há pedidos pendentes");
+				return; //pode não dar
 			}	
-			else{ //sabemos ultima posiÃ§Ã£o ocupada 
+			else{ //sabemos ultima posição ocupada 
 				
 				//System.outprintln("\nentrou else runCicle");
 				
 				/*if(aux==-1){
-					aux=14; // para se estiver cheio ter de ver atÃ© ao tamanho de vetorPedidosPendentes
+					aux=14; // para se estiver cheio ter de ver até ao tamanho de vetorPedidosPendentes
 					//System.outprintln("\nvetor pendentes cheio");
 				}
 				*/
-				//for(i=0; i<=(aux-1); i++){  //pois diz atÃ© Ã  primeira posiÃ§Ã£o livre logo -1 para ultima ocupada
+				//for(i=0; i<=(aux-1); i++){  //pois diz até à primeira posição livre logo -1 para ultima ocupada
 					
 					String str=vetorPedidosPendentes[0];
 					
-					//System.outprintf("\nvalor string %s na iteraÃ§Ã£o 0", str);
-					//String s=String.format("\nvalor string %s na iteraÃ§Ã£o %d", str, 0);
+					//System.outprintf("\nvalor string %s na iteração 0", str);
+					//String s=String.format("\nvalor string %s na iteração %d", str, 0);
 					////System.outprintln(s);
 					
 					j=inserePedidosEmExecucao(str);
 					if(j==true){
-						//System.outprintln("\nNovo pedido em execuÃ§Ã£o adicionado");	
-						//esta a dizer que estÃ¡ a inserir, mesmo que n>2 e nÃ£o insira nenhum pq retorna true funÃ§Ã£o
-						//mas vendo pelos printfs dentro do pedidos em execuÃ§Ã£o ve-se o que insere ou nÃ£o
+						//System.outprintln("\nNovo pedido em execução adicionado");	
+						//esta a dizer que está a inserir, mesmo que n>2 e não insira nenhum pq retorna true função
+						//mas vendo pelos printfs dentro do pedidos em execução ve-se o que insere ou não
 					}
 					else {
-						//System.outprintln("\nNovo pedido nÃ£o tem recursos disponiveis, passado para fim da fila existente");							
+						//System.outprintln("\nNovo pedido não tem recursos disponiveis, passado para fim da fila existente");							
 					}
 					
 					//System.outprintf("\nvetor pendentes");
@@ -734,7 +910,7 @@ public void runCicle () throws InterruptedException{
 					//System.outprintf("\n 12: %s", vetorPedidosPendentes[12]);
 					//System.outprintf("\n 13: %s", vetorPedidosPendentes[13]);
 					////System.outprintf("\n 14: %s", vetorPedidosPendentes[14]);
-					//System.outprintf("\nvetor em execuÃ§Ã£o");
+					//System.outprintf("\nvetor em execução");
 					//System.outprintf("\n 0: %s", pedidosEmExecucao[0]);
 					//System.outprintf("\n 1: %s", pedidosEmExecucao[1]);
 					//System.outprintf("\n 2: %s", pedidosEmExecucao[2]);
@@ -744,11 +920,9 @@ public void runCicle () throws InterruptedException{
 			}
 			
 			
-			//verificar todos pedidos em execuÃ§Ã£o, e os que tiverem acabados, tenho de retirar do em execuÃ§Ã£o 
+			//verificar todos pedidos em execução, e os que tiverem acabados, tenho de retirar do em execução 
 			//e passar para acabados	
 			
 	}
 
 }
-	
-	

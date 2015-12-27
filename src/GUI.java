@@ -106,12 +106,12 @@ public class GUI {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 11, 806, 409);
 		frame.getContentPane().add(tabbedPane);
-		JList ls_pen = new JList(inter.vetorPedidosAcabados);//TESTE PASSAR PARA PENDENTES
+		JList ls_pen = new JList(inter.vetorPedidosPendentesInterface);//TESTE PASSAR PARA PENDENTES
 		JPanel Pend = new JPanel();
 		Pend.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ls_pen.setListData(inter.vetorPedidosAcabados);//TESTE PASSAR PARA PENDENTES
+				ls_pen.setListData(inter.vetorPedidosPendentesInterface);//TESTE PASSAR PARA PENDENTES
 			}
 		});
 		tabbedPane.addTab("Pedidos Pendentes", null, Pend, null);
@@ -127,25 +127,21 @@ public class GUI {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ls_pen.setListData(inter.vetorPedidosAcabados);//TESTE PASSAR PARA PENDENTES
+				ls_pen.setListData(inter.vetorPedidosPendentesInterface);//TESTE PASSAR PARA PENDENTES
 			}
 		});
 		btnNewButton.setBounds(337, 335, 96, 23);
 		Pend.add(btnNewButton);
 		
-		JLabel lblHoraDeChegada = new JLabel("Hora de Chegada");
-		lblHoraDeChegada.setBounds(21, 12, 121, 14);
+		JLabel lblHoraDeChegada = new JLabel("Hora de Chegada          Pedido");
+		lblHoraDeChegada.setBounds(21, 12, 215, 14);
 		Pend.add(lblHoraDeChegada);
-		
-		JLabel label = new JLabel("Pedido");
-		label.setBounds(174, 12, 121, 14);
-		Pend.add(label);
-		JList ls_exe = new JList(inter.vetorPedidosAcabados);//TESTE PASSAR PARA PENDENTES
+		JList ls_exe = new JList(inter.pedidosEmExecucaoInterface);//TESTE PASSAR PARA PENDENTES
 		JPanel Exe = new JPanel();
 		Exe.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ls_exe.setListData(inter.vetorPedidosAcabados);//TESTE PASSAR PARA PENDENTES
+				ls_exe.setListData(inter.pedidosEmExecucaoInterface);//TESTE PASSAR PARA PENDENTES
 			}
 		});
 		tabbedPane.addTab("Pedidos em Execu\u00E7\u00E3o", null, Exe, null);
@@ -161,30 +157,23 @@ public class GUI {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ls_exe.setListData(inter.vetorPedidosAcabados);//TESTE PASSAR PARA PENDENTES
+				ls_exe.setListData(inter.pedidosEmExecucaoInterface);//TESTE PASSAR PARA PENDENTES
+				System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+inter.pedidosEmExecucaoInterface[1]);
 			}
 		});
 		btnNewButton_1.setBounds(347, 332, 103, 23);
 		Exe.add(btnNewButton_1);
 		
-		JLabel label_1 = new JLabel("Hora de Chegada");
-		label_1.setBounds(10, 11, 121, 14);
-		Exe.add(label_1);
-		
-		JLabel label_2 = new JLabel("Pedido");
-		label_2.setBounds(163, 11, 121, 14);
-		Exe.add(label_2);
-		
-		JLabel label_3 = new JLabel("Hora de Arranque");
-		label_3.setBounds(291, 11, 121, 14);
-		Exe.add(label_3);
+		JLabel lblHoraDeChegada_1 = new JLabel("Hora de Chegada          Pedido          Hora de Arranque");
+		lblHoraDeChegada_1.setBounds(10, 11, 371, 14);
+		Exe.add(lblHoraDeChegada_1);
 		
 		JPanel Acabados = new JPanel();
-		JList ls_ac = new JList(inter.vetorPedidosAcabados);
+		JList ls_ac = new JList(inter.vetorPedidosAcabadosInterface);
 		Acabados.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ls_ac.setListData(inter.vetorPedidosAcabados);
+				ls_ac.setListData(inter.vetorPedidosAcabadosInterface);
 			}
 		});
 		tabbedPane.addTab("Pedidos Acabados", null, Acabados, null);
@@ -202,27 +191,15 @@ public class GUI {
 		btnActualizar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				ls_ac.setListData(inter.vetorPedidosAcabados);
+				ls_ac.setListData(inter.vetorPedidosAcabadosInterface);
 			}
 		});
 		btnActualizar.setBounds(333, 332, 98, 23);
 		Acabados.add(btnActualizar);
 		
-		JLabel label_4 = new JLabel("Hora de Chegada");
-		label_4.setBounds(10, 11, 121, 14);
-		Acabados.add(label_4);
-		
-		JLabel label_5 = new JLabel("Pedido");
-		label_5.setBounds(163, 11, 121, 14);
-		Acabados.add(label_5);
-		
-		JLabel label_6 = new JLabel("Hora de Arranque");
-		label_6.setBounds(291, 11, 121, 14);
-		Acabados.add(label_6);
-		
-		JLabel label_7 = new JLabel("Hora de Fim");
-		label_7.setBounds(436, 11, 121, 14);
-		Acabados.add(label_7);
+		JLabel lblHoraDeChegada_2 = new JLabel("Hora de Chegada          Pedido          Hora de Arranque          Hora de Fim");
+		lblHoraDeChegada_2.setBounds(10, 11, 566, 14);
+		Acabados.add(lblHoraDeChegada_2);
 		
 		JPanel Stats_Trans = new JPanel();
 		tabbedPane.addTab("Estat\u00EDsticas de Produ\u00E7\u00E3o", null, Stats_Trans, null);
