@@ -71,6 +71,24 @@ public class GUI {
 	private JTextField emMont;
 	private JTextField emDesc;
 	private JTextField emTransf;
+	private JTextField P1Z1;
+	private JTextField P2Z1;
+	private JTextField P3Z1;
+	private JTextField P4Z1;
+	private JTextField P5Z1;
+	private JTextField P6Z1;
+	private JTextField P7Z1;
+	private JTextField P8Z1;
+	private JTextField P9Z1;
+	private JTextField P1Z2;
+	private JTextField P2Z2;
+	private JTextField P3Z2;
+	private JTextField P4Z2;
+	private JTextField P5Z2;
+	private JTextField P6Z2;
+	private JTextField P7Z2;
+	private JTextField P8Z2;
+	private JTextField P9Z2;
 	/**
 	 * Launch the application.
 	 */
@@ -770,19 +788,19 @@ public class GUI {
 		Dz1 = new JTextField();
 		Dz1.setHorizontalAlignment(SwingConstants.CENTER);
 		Dz1.setColumns(10);
-		Dz1.setBounds(633, 89, 73, 20);
+		Dz1.setBounds(716, 82, 43, 20);
 		Stats_MU.add(Dz1);
 		
 		Dz2 = new JTextField();
 		Dz2.setHorizontalAlignment(SwingConstants.CENTER);
 		Dz2.setColumns(10);
-		Dz2.setBounds(633, 147, 73, 20);
+		Dz2.setBounds(717, 164, 43, 20);
 		Stats_MU.add(Dz2);
 		
 		emDesc = new JTextField();
 		emDesc.setHorizontalAlignment(SwingConstants.CENTER);
 		emDesc.setColumns(10);
-		emDesc.setBounds(632, 196, 73, 20);
+		emDesc.setBounds(632, 255, 73, 20);
 		Stats_MU.add(emDesc);
 		
 		emMont = new JTextField();
@@ -790,6 +808,96 @@ public class GUI {
 		emMont.setColumns(10);
 		emMont.setBounds(243, 106, 97, 20);
 		Stats_MU.add(emMont);
+		
+		P1Z1 = new JTextField();
+		P1Z1.setColumns(10);
+		P1Z1.setBounds(551, 79, 20, 20);
+		Stats_MU.add(P1Z1);
+		
+		P2Z1 = new JTextField();
+		P2Z1.setColumns(10);
+		P2Z1.setBounds(581, 79, 20, 20);
+		Stats_MU.add(P2Z1);
+		
+		P3Z1 = new JTextField();
+		P3Z1.setColumns(10);
+		P3Z1.setBounds(609, 79, 20, 20);
+		Stats_MU.add(P3Z1);
+		
+		P4Z1 = new JTextField();
+		P4Z1.setColumns(10);
+		P4Z1.setBounds(636, 79, 20, 20);
+		Stats_MU.add(P4Z1);
+		
+		P5Z1 = new JTextField();
+		P5Z1.setColumns(10);
+		P5Z1.setBounds(665, 79, 20, 20);
+		Stats_MU.add(P5Z1);
+		
+		P6Z1 = new JTextField();
+		P6Z1.setColumns(10);
+		P6Z1.setBounds(562, 123, 20, 20);
+		Stats_MU.add(P6Z1);
+		
+		P7Z1 = new JTextField();
+		P7Z1.setColumns(10);
+		P7Z1.setBounds(592, 123, 20, 20);
+		Stats_MU.add(P7Z1);
+		
+		P8Z1 = new JTextField();
+		P8Z1.setColumns(10);
+		P8Z1.setBounds(620, 123, 20, 20);
+		Stats_MU.add(P8Z1);
+		
+		P9Z1 = new JTextField();
+		P9Z1.setColumns(10);
+		P9Z1.setBounds(651, 123, 20, 20);
+		Stats_MU.add(P9Z1);
+		
+		P1Z2 = new JTextField();
+		P1Z2.setColumns(10);
+		P1Z2.setBounds(549, 164, 20, 20);
+		Stats_MU.add(P1Z2);
+		
+		P2Z2 = new JTextField();
+		P2Z2.setColumns(10);
+		P2Z2.setBounds(579, 164, 20, 20);
+		Stats_MU.add(P2Z2);
+		
+		P3Z2 = new JTextField();
+		P3Z2.setColumns(10);
+		P3Z2.setBounds(607, 164, 20, 20);
+		Stats_MU.add(P3Z2);
+		
+		P4Z2 = new JTextField();
+		P4Z2.setColumns(10);
+		P4Z2.setBounds(634, 164, 20, 20);
+		Stats_MU.add(P4Z2);
+		
+		P5Z2 = new JTextField();
+		P5Z2.setColumns(10);
+		P5Z2.setBounds(663, 164, 20, 20);
+		Stats_MU.add(P5Z2);
+		
+		P6Z2 = new JTextField();
+		P6Z2.setColumns(10);
+		P6Z2.setBounds(560, 208, 20, 20);
+		Stats_MU.add(P6Z2);
+		
+		P7Z2 = new JTextField();
+		P7Z2.setColumns(10);
+		P7Z2.setBounds(590, 208, 20, 20);
+		Stats_MU.add(P7Z2);
+		
+		P8Z2 = new JTextField();
+		P8Z2.setColumns(10);
+		P8Z2.setBounds(618, 208, 20, 20);
+		Stats_MU.add(P8Z2);
+		
+		P9Z2 = new JTextField();
+		P9Z2.setColumns(10);
+		P9Z2.setBounds(649, 208, 20, 20);
+		Stats_MU.add(P9Z2);
 		
 		button = new JButton("Actualizar");
 		button.addMouseListener(new MouseAdapter() {
@@ -801,9 +909,28 @@ public class GUI {
 				MTotal.setText(Integer.toString(inter.num_montagens_total));
 				emDesc.setText(Integer.toString(inter.emDesc));
 				emMont.setText(Integer.toString(inter.emMont));
+				P1Z1.setText(Integer.toString(inter.num_descarga_d1_p1));
+				P2Z1.setText(Integer.toString(inter.num_descarga_d1_p2));
+				P3Z1.setText(Integer.toString(inter.num_descarga_d1_p3));
+				P4Z1.setText(Integer.toString(inter.num_descarga_d1_p4));
+				P5Z1.setText(Integer.toString(inter.num_descarga_d1_p5));
+				P6Z1.setText(Integer.toString(inter.num_descarga_d1_p6));
+				P7Z1.setText(Integer.toString(inter.num_descarga_d1_p7));
+				P8Z1.setText(Integer.toString(inter.num_descarga_d1_p8));
+				P9Z1.setText(Integer.toString(inter.num_descarga_d1_p9));
+				
+				P1Z2.setText(Integer.toString(inter.num_descarga_d2_p1));
+				P2Z2.setText(Integer.toString(inter.num_descarga_d2_p2));
+				P3Z2.setText(Integer.toString(inter.num_descarga_d2_p3));
+				P4Z2.setText(Integer.toString(inter.num_descarga_d2_p4));
+				P5Z2.setText(Integer.toString(inter.num_descarga_d2_p5));
+				P6Z2.setText(Integer.toString(inter.num_descarga_d2_p6));
+				P7Z2.setText(Integer.toString(inter.num_descarga_d2_p7));
+				P8Z2.setText(Integer.toString(inter.num_descarga_d2_p8));
+				P9Z2.setText(Integer.toString(inter.num_descarga_d2_p9));
 			}
 		});
-		button.setBounds(323, 291, 89, 23);
+		button.setBounds(323, 327, 89, 23);
 		Stats_MU.add(button);
 		
 		JLabel label_51 = new JLabel("Total de Pe\u00E7as Montadas");
@@ -818,12 +945,12 @@ public class GUI {
 		
 		JLabel label_53 = new JLabel("Zona de Descarga 1");
 		label_53.setFont(new Font("Tahoma", Font.BOLD, 14));
-		label_53.setBounds(444, 89, 145, 16);
+		label_53.setBounds(387, 82, 145, 16);
 		Stats_MU.add(label_53);
 		
 		JLabel lblTotalDePeas_1 = new JLabel("Zona de Descargas 2");
 		lblTotalDePeas_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTotalDePeas_1.setBounds(444, 147, 163, 16);
+		lblTotalDePeas_1.setBounds(387, 168, 163, 16);
 		Stats_MU.add(lblTotalDePeas_1);
 		
 		JLabel lblTotalDePeas_2 = new JLabel("Total de Pe\u00E7as em Montagem");
@@ -834,8 +961,126 @@ public class GUI {
 		
 		JLabel lblTotalDePeas_3 = new JLabel("Total de Pe\u00E7as em Descarga");
 		lblTotalDePeas_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTotalDePeas_3.setBounds(389, 201, 207, 16);
+		lblTotalDePeas_3.setBounds(389, 260, 207, 16);
 		Stats_MU.add(lblTotalDePeas_3);
+		
+		JLabel lblNewLabel = new JLabel("Total");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(716, 149, 46, 14);
+		Stats_MU.add(lblNewLabel);
+		
+		JLabel label = new JLabel("Total");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setBounds(716, 68, 46, 14);
+		Stats_MU.add(label);
+		
+		JLabel label_1 = new JLabel("P1");
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_1.setBounds(547, 56, 30, 26);
+		Stats_MU.add(label_1);
+		
+		JLabel label_2 = new JLabel("P4");
+		label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		label_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_2.setBounds(631, 56, 30, 26);
+		Stats_MU.add(label_2);
+		
+		JLabel label_3 = new JLabel("P5");
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		label_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_3.setBounds(660, 56, 30, 26);
+		Stats_MU.add(label_3);
+		
+		JLabel label_4 = new JLabel("P2");
+		label_4.setHorizontalAlignment(SwingConstants.CENTER);
+		label_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_4.setBounds(575, 56, 30, 26);
+		Stats_MU.add(label_4);
+		
+		JLabel label_5 = new JLabel("P3");
+		label_5.setHorizontalAlignment(SwingConstants.CENTER);
+		label_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_5.setBounds(602, 56, 30, 26);
+		Stats_MU.add(label_5);
+		
+		JLabel label_6 = new JLabel("P6");
+		label_6.setHorizontalAlignment(SwingConstants.CENTER);
+		label_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_6.setBounds(557, 101, 30, 26);
+		Stats_MU.add(label_6);
+		
+		JLabel label_7 = new JLabel("P7");
+		label_7.setHorizontalAlignment(SwingConstants.CENTER);
+		label_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_7.setBounds(587, 101, 30, 26);
+		Stats_MU.add(label_7);
+		
+		JLabel label_10 = new JLabel("P8");
+		label_10.setHorizontalAlignment(SwingConstants.CENTER);
+		label_10.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_10.setBounds(616, 101, 30, 26);
+		Stats_MU.add(label_10);
+		
+		JLabel label_58 = new JLabel("P9");
+		label_58.setHorizontalAlignment(SwingConstants.CENTER);
+		label_58.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_58.setBounds(645, 101, 30, 26);
+		Stats_MU.add(label_58);
+		
+		JLabel label_59 = new JLabel("P1");
+		label_59.setHorizontalAlignment(SwingConstants.CENTER);
+		label_59.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_59.setBounds(545, 141, 30, 26);
+		Stats_MU.add(label_59);
+		
+		JLabel label_60 = new JLabel("P4");
+		label_60.setHorizontalAlignment(SwingConstants.CENTER);
+		label_60.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_60.setBounds(629, 141, 30, 26);
+		Stats_MU.add(label_60);
+		
+		JLabel label_61 = new JLabel("P5");
+		label_61.setHorizontalAlignment(SwingConstants.CENTER);
+		label_61.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_61.setBounds(658, 141, 30, 26);
+		Stats_MU.add(label_61);
+		
+		JLabel label_62 = new JLabel("P2");
+		label_62.setHorizontalAlignment(SwingConstants.CENTER);
+		label_62.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_62.setBounds(573, 141, 30, 26);
+		Stats_MU.add(label_62);
+		
+		JLabel label_63 = new JLabel("P3");
+		label_63.setHorizontalAlignment(SwingConstants.CENTER);
+		label_63.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_63.setBounds(600, 141, 30, 26);
+		Stats_MU.add(label_63);
+		
+		JLabel label_64 = new JLabel("P6");
+		label_64.setHorizontalAlignment(SwingConstants.CENTER);
+		label_64.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_64.setBounds(555, 186, 30, 26);
+		Stats_MU.add(label_64);
+		
+		JLabel label_65 = new JLabel("P7");
+		label_65.setHorizontalAlignment(SwingConstants.CENTER);
+		label_65.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_65.setBounds(585, 186, 30, 26);
+		Stats_MU.add(label_65);
+		
+		JLabel label_66 = new JLabel("P8");
+		label_66.setHorizontalAlignment(SwingConstants.CENTER);
+		label_66.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_66.setBounds(614, 186, 30, 26);
+		Stats_MU.add(label_66);
+		
+		JLabel label_67 = new JLabel("P9");
+		label_67.setHorizontalAlignment(SwingConstants.CENTER);
+		label_67.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		label_67.setBounds(643, 186, 30, 26);
+		Stats_MU.add(label_67);
 		
 		
 	}

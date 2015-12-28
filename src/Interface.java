@@ -90,26 +90,26 @@ public class Interface {
 	//MONTAGEM E DESCARGA
 	public int emDesc=0;
 	public int num_descarga_d1_total=0;
-	private int num_descarga_d1_p1=0;
-	private int num_descarga_d1_p2=0;
-	private int num_descarga_d1_p3=0;
-	private int num_descarga_d1_p4=0;
-	private int num_descarga_d1_p5=0;
-	private int num_descarga_d1_p6=0;
-	private int num_descarga_d1_p7=0;
-	private int num_descarga_d1_p8=0;
-	private int num_descarga_d1_p9=0;
+	public int num_descarga_d1_p1=0;
+	public int num_descarga_d1_p2=0;
+	public int num_descarga_d1_p3=0;
+	public int num_descarga_d1_p4=0;
+	public int num_descarga_d1_p5=0;
+	public int num_descarga_d1_p6=0;
+	public int num_descarga_d1_p7=0;
+	public int num_descarga_d1_p8=0;
+	public int num_descarga_d1_p9=0;
 	
 	public int num_descarga_d2_total=0;
-	private int num_descarga_d2_p1=0;
-	private int num_descarga_d2_p2=0;
-	private int num_descarga_d2_p3=0;
-	private int num_descarga_d2_p4=0;
-	private int num_descarga_d2_p5=0;
-	private int num_descarga_d2_p6=0;
-	private int num_descarga_d2_p7=0;
-	private int num_descarga_d2_p8=0;
-	private int num_descarga_d2_p9=0;
+	public int num_descarga_d2_p1=0;
+	public int num_descarga_d2_p2=0;
+	public int num_descarga_d2_p3=0;
+	public int num_descarga_d2_p4=0;
+	public int num_descarga_d2_p5=0;
+	public int num_descarga_d2_p6=0;
+	public int num_descarga_d2_p7=0;
+	public int num_descarga_d2_p8=0;
+	public int num_descarga_d2_p9=0;
 	public int emMont=0;
 	int num_montagens_total=0;
 	
