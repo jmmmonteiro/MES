@@ -258,36 +258,14 @@ public synchronized void removePedido(int posicao, String[] str){
 public synchronized int procuraPosicao(int NO, String[] nomeVetor/*, int tamanho*/){
 		
 		//System.outprintf("\n chegou procura posição");
-		
-		String str = Integer.toString(NO); // converte string para inteiro
-		
-		System.out.printf("\n valor da string str (NO)%s:", str);
-		
-		
-		int tamanho=checkPrimeiraPosicoesVazia(nomeVetor);
-		//System.outprintf("\nvalor posição livre %d", tamanho);
-		
-		if(tamanho==-1){
-			tamanho=nomeVetor.length;
-			/*
-			if(nomeVetor.length==15){
-				tamanho=15;
-			}
-			else if(nomeVetor.length==7){
-				tamanho=7;
-			}*/
-		}	
-			
 		int i;
-		
-		tamanho=tamanho-1;
-		System.out.printf("\nvalor tamanho %d", tamanho);
-		
-		for(i=0; i<=(tamanho); i++){
+		int a;
+		for(i=0; i<=(nomeVetor.length-1); i++){
 			
+			a=Integer.parseInt(nomeVetor[i].substring(2, 5));
 			//System.outprintf("\n entrou for");
-			System.out.printf("\nvalor do i: %d", i);
-			if(nomeVetor[i].contains(str)){ //quando encontrar o elemento do qual se quer saber a posição
+			//System.out.printf("\nvalor do i: %d", i);
+			if(a==NO){ //quando encontrar o elemento do qual se quer saber a posição
 				//System.outprintf("\n valor supostamente igual %s",nomeVetor[i]);
 				System.out.printf("\nvalor do i: %d", i);
 				return i; //retorna a posição do elemento no vetor
