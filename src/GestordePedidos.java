@@ -298,9 +298,21 @@ public synchronized int procuraPosicao(int NO, String[] nomeVetor/*, int tamanho
 
 // Mandar para inteface o pedido acabado
 public synchronized void SinalPedidoAcabado(int NO){ //synchronized para so uma thread por fazer isto de cada vez
+	int a;
+	int i;
+	for(i=0; i<=(pedidosEmExecucao.length-1); i++){
+		
+		a=Integer.parseInt(pedidosEmExecucao[i].substring(2, 5));
+		//System.outprintf("\n entrou for");
+		System.out.printf("\nvalor do i: %d", i);
+		if(a==NO){ //quando encontrar o elemento do qual se quer saber a posição
+			//System.outprintf("\n valor supostamente igual %s",nomeVetor[i]);
+			System.out.printf("\nvalor do i: %d", i);
+			break; //retorna a posição do elemento no vetor
+		}
+	}	
 	
-	int posicao=procuraPosicao(NO, pedidosEmExecucao/*, 6*/); //procura posicao elemento 
-	String auxiliar=pedidosEmExecucao[posicao];
+	String auxiliar=pedidosEmExecucao[i];
 	//mandar para interface
 	//System.outprintf("\nManda para interface %s",pedidosEmExecucao[posicao]);
 	
@@ -309,11 +321,11 @@ public synchronized void SinalPedidoAcabado(int NO){ //synchronized para so uma 
 	//grafica.adicionaPedidoAcabado(auxiliar);
 	
 	
-	removePedido(posicao, pedidosEmExecucao);
+	removePedido(i, pedidosEmExecucao);
 	
 	
 //****************************************************************************************************************************************************************	
-	mandaInterface(posicao,auxiliar,2);//mandar pedido acabado e remove também
+	mandaInterface(i,auxiliar,2);//mandar pedido acabado e remove também
 //****************************************************************************************************************************************************************	
 	
 }
