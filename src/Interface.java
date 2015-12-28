@@ -220,7 +220,7 @@ public class Interface {
 	String[] vetorPedidosAcabadosInterface = new String [60];
 	
 // Dizer a primeira posição livre do vetorPedidosAcabados onde inserir
-public int checkPrimeiraPosicoesVazia(String[] str){
+public synchronized int checkPrimeiraPosicoesVazia(String[] str){
 		
 		int i;
 		
